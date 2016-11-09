@@ -23,6 +23,8 @@ a:hover { color:#333; }
 .ar { text-align: right; }
 .ac { text-align: center; }
 
+#body{margin-left: 15%; margin-right: 15% }
+
 h3 { font-size:15px; line-height:18px; color:#bcbcbc; text-transform: uppercase; }
 
 h1#logo { font-size:0; line-height:0; width:550px; height:61px; float:left; }
@@ -37,9 +39,9 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 #navigation ul li a.active { color:#ffd900; }
 
 
-.shell { width:980px; margin:0 auto; }
+.shell { width:980px; margin:0 auto;}
 
-#top { height:379px; width: 80%; background:#000; }
+#top { height:379px; width: 100%; background:#000;}
 #header { height:61px; }
 
 #slider { width:980px; height:318px; position:relative; overflow:hidden; }
@@ -53,7 +55,7 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 #slider-nav a.next{ background:url(images/next.gif); right:0;}
 
 
-#main { width:80%; background:url(images/main.gif) repeat-x 0 0;}
+#main { width:100%; background:url(images/main.gif) repeat-x 0 0;}
 
 .options { height:47px; white-space:nowrap; padding-top:3px; width: 800px;}
 .options .search{ float:left; padding:6px 0 0 0; background:url(images/border.gif) repeat-y right 0; height:33px; margin-right:12px;}
@@ -73,7 +75,7 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 
 #content { padding-top:20px; width: 1000px;}
 
-.tabs { height:36px; width: 700px; }
+.tabs { height:36px; width: 700px; margin-left: 12%;}
 .tabs ul{ list-style-type: none; font-size:14px; text-transform: uppercase; font-weight: bold; }
 .tabs ul li{ float:left; display:inline; margin-right:1px; }
 .tabs ul li a,
@@ -90,7 +92,7 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 .tabs ul li a.active span,
 .tabs ul li a:hover span{ background-position:right 0;}
 
-#container { background:#fff url(images/container-t.gif) no-repeat 0 0; padding:20px 20px; width: 700px;}
+#container { background:#fff url(images/container-t.gif) no-repeat 0 0; padding:20px 20px; width: 700px; margin-left: 12%}
 
 .items { position:relative; width:960px; margin-right:-20px; padding-bottom:5px; }
 .items ul{ list-style-type: none;}
@@ -111,3 +113,36 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 .tab-content { display:none;}
 
 .tabbed { min-height:420px;}
+
+#login_container {
+width: 60%;
+	padding: 12px 20px;
+	margin: 8px 65px;
+	display: inline-block;
+	box-sizing: border-box;
+	border: 3px solid #f1f1f1;
+	margin-left: 20%;
+}
+#login_container button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+}
+
+#login_container .cancelbtn {
+	width: auto;
+	padding: 10px 18px;
+	background-color: #f44336;
+}
+#login_container input[type=text], #login_container input[type=password] {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}

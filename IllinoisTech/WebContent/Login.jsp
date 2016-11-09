@@ -71,12 +71,11 @@
       <div id="container">
       	<div id="login_container">
       		<form action='LoginValidate.jsp' method="POST">
-						<input type="hidden" id="form" name="form" value="login">
 						<div align="center">
 							<h2>Login</h2>
 						</div>
-						<label><b>Username:</b></label><br> 
-						<input type="text" placeholder="Enter Username" name="uname" id = "uname" required><br> 
+						<label><b>Email Id:</b></label><br> 
+						<input type="text" placeholder="Enter Email" name="email" id = "email" required><br> 
 						
 						<label><b>Password:</b></label><br>
 						<input type="password" placeholder="Enter Password" name="psw" id = "psw"required><br>
