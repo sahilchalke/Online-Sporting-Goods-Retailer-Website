@@ -93,7 +93,9 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 .tabs ul li a:hover span{ background-position:right 0;}
 
 #container { background:#fff url(images/container-t.gif) no-repeat 0 0; padding:20px 20px; width: 700px; margin-left: 12%}
-
+#sel1{
+ width:250px;   
+}
 .items { position:relative; width:960px; margin-right:-20px; padding-bottom:5px; }
 .items ul{ list-style-type: none;}
 .items ul .image{ text-align: center;}
