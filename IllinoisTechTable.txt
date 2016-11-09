@@ -1,0 +1,73 @@
+ create table Retailer(
+     RetailerId varchar(255),
+    RetailerName varchar(255),
+    ReatailerProduct varchar(255),
+    Flag varchar(255),
+    Email varchar(255),
+    Primary Key (RetailerId));
+
+
+create table Products(
+    PID varchar(255),
+    RetailerId varchar(255),
+    Category varchar(255),
+    ProductName varchar(255),
+    ImagePath varchar(255),
+    Price varchar(255),
+    Discount varchar(255),
+    Active varchar(255),
+    Primary Key (PID),
+    FOREIGN KEY (RetailerId)  REFERENCES Retailer (RetailerId));
+
+ Create table User(
+     UID varchar(255),
+     UserName varchar(255),
+     Password varchar(255),
+    Type varchar(255),
+    Email varchar(255),
+    PhoneNumber varchar(255),
+    Address varchar(255),
+    Primary Key (UID));
+
+ create table Invoice(
+     OID varchar(255),
+    UID varchar(255),
+     CC varchar(255),
+     Total varchar(255),
+    DeliveryDate varchar(255),
+     PurchaseDate varchar(255),
+     ShippingAddress varchar(255),
+    Primary Key  (OID),
+   FOREIGN KEY (UID) REFERENCES User (UID));
+
+create table Orders(
+    OID varchar(255),
+     PID varchar(255),
+    Quantity varchar(255),
+    Warranty varchar(255),
+    Price varchar(255),
+FOREIGN KEY (OID) REFERENCES Invoice (OID) ,
+  FOREIGN KEY (PID) REFERENCES Products (PID),
+     Primary Key (OID,PID));
+
+create table CreditCard(
+     UID varchar(255),
+     CreditCardNumber varchar(255),
+     NameOnCard varchar(255),
+     CVV varchar(255),
+     ExpiryDate varchar(255),
+     BillingAddress varchar(255),
+     FOREIGN KEY (UID) REFERENCES User (UID),
+     Primary Key (UID,CreditCardNumber));
+
+
+ create table Cart(
+    PID varchar(255),
+    OID varchar(255),
+     FOREIGN KEY (PID) REFERENCES Products (PID),
+     FOREIGN KEY (OID) REFERENCES Invoice (OID));
+
+
+
+
+
