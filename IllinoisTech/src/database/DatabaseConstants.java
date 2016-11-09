@@ -1,6 +1,6 @@
 package database;
 
-public class DatabaseConstants {
+public interface DatabaseConstants {
 	
 		// JDBC driver name and database URL
 		static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
