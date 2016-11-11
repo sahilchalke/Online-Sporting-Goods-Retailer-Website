@@ -7,18 +7,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import bean.Cart;
 
-
-
-
 public class MySqlJDBC implements DatabaseConstants {
 
-	private Connection conn = null;
-	private Statement stmt = null;
-	private String sqlQuery = "";
+	private static Connection conn = null;
+	private static Statement stmt = null;
+	private static String sqlQuery = "";
 
 	public MySqlJDBC() {
 		try {
@@ -29,16 +29,16 @@ public class MySqlJDBC implements DatabaseConstants {
 	}
 
 	public Cart getUserCart(String userid){
-		
+
 		Cart cart = new Cart();
 		ArrayList<String> productList = new ArrayList<String>();
-		
+
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
 			sqlQuery = "select * from Cart where UID = '" + userid + "'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
-			
+
 			while(rs.next()){
 				productList.add(rs.getString("PID"));
 			}
@@ -85,7 +85,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			stmt = conn.createStatement();
 			sqlQuery = "select Password from User where Email = '" + email + "'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
-			
+
 			while(rs.next()){
 				if(rs.getString("Password").equals(pass)){
 					ret = true;
@@ -100,7 +100,25 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 		return ret;
+	}
 
+	public void insertUser(String username, String password, String email, String address, String role, String phone){
+
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("ddMMyyHHmmSS"); 
+		String uid = format.format(date);
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			String insertUser = "Insert into user(UID, UserName, Password, Type, Email, PhoneNumber, Address) values('" + uid + "', '" + username + "', '" + 
+													 password + "', '" + role + "', '" + email + "', '" + phone +"', '" + address + "')";
+
+			int i = stmt.executeUpdate(insertUser);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }
