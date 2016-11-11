@@ -87,6 +87,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 
 			while(rs.next()){
+				System.out.println(rs.getString("Password") + " " + pass);
 				if(rs.getString("Password").equals(pass)){
 					ret = true;
 					break;

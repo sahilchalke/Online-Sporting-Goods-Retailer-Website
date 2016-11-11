@@ -24,8 +24,7 @@
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="#">Support</a></li>
-          <li><a href="Login.jsp">Login</a></li>
-          <li><a href="#">Sign Up</a></li>
+          <li><a href="Signup.html">Sign Up</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </div>

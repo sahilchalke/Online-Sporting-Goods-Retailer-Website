@@ -11,17 +11,18 @@
 <%
 	
 	String email = request.getParameter("email");
-	String pass = request.getParameter("pwd");
+	String pass = request.getParameter("psw");
 	//User user = new User();
 	Cart cart = new Cart();
 	ValidateLogin validate = new ValidateLogin(email, pass);
 	if(validate.validateUser()){
 		MySqlJDBC mysql = new MySqlJDBC();
+		out.println("Success");
 		//user = mysql.getUserData(email);
 		//if(user is not manager){
 			//cart = mysql.getUserCart(user.getUserId());
 		//}
-		response.sendRedirect("UserHome.jsp");
+		response.sendRedirect("index.html");
 	}else{
 		request.setAttribute("status", "invalid");
 		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");

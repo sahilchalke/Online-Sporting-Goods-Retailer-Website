@@ -1,23 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
-<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
-<%@page import="database.DatabaseConstants"%>
-<%@page import="database.MySqlJDBC"%>
+<%@ page import="database.MySqlJDBC" %>
 	
 <%
-	
+	MySqlJDBC mysql = new MySqlJDBC();
 	String username = request.getParameter("username");
 	String address = request.getParameter("address");
 	String email = request.getParameter("email");
-	String phone = request.getParameter("phone");
-	String password = request.getParameter("password");
-	String role = request.getParameter("role");
-	
-	MySqlJDBC.insertUser(username, password, email, address, role, phone);
-	
-
+	String phone = request.getParameter("phonenumber");
+	String password = request.getParameter("password1");
+	mysql.insertUser(username, password, email, address, "Customer", phone);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,7 +24,7 @@
 <script src="js/jquery-func.js" type="text/javascript"></script>
 </head>
 <body>
-	<div align="center">
+	<div id="body">
 		<!-- Top -->
 		<div id="top">
 			<div class="shell">
@@ -72,36 +64,58 @@
 			</div>
 		</div>
 		<div id="main">
-		<br>
-		<br>
-		Success!!
-		<br>
-			
-		</div>
-		<!-- Brands -->
-		<div class="brands">
-			<h3>Brands</h3>
-			<div class="logos">
-				<a href="#"><img src="css/images/logo1.gif" alt="" /></a> <a
-					href="#"><img src="css/images/logo2.gif" alt="" /></a> <a href="#"><img
-					src="css/images/logo3.gif" alt="" /></a> <a href="#"><img
-					src="css/images/logo4.gif" alt="" /></a> <a href="#"><img
-					src="css/images/logo5.gif" alt="" /></a>
+			<div class="shell">
+				<!-- Search, etc -->
+				<div class="options">
+					<div class="search">
+						<form action="#" method="post">
+							<span class="field"> <input type="text" class="blink"
+								value=" search here.." title="SEARCH" />
+							</span> <input type="text" class="search-submit" value="GO" />
+						</form>
+					</div>
+					<div class="right">
+						<span class="cart"> <a href="#" class="cart-ico">&nbsp;</a>
+							<strong>$0.00</strong>
+						</span> <span class="left more-links"> <a href="#">Checkout</a>
+					</div>
+				</div>
+				    <div id="content">
+      <!--Login Container -->
+      <div id="container">
+      	<div id="login_container">
+      	<p align="center">You have been registered successfully. Kindly Login.</p>
+					<form action="Login.jsp">
+						<button type="submit">Login</button>
+					</form>
+      	</div>
+        <!-- Brands -->
+        <div class="brands">
+          <h3>Brands</h3>
+          <div class="logos"> <a href="#"><img src="css/images/logo1.gif" alt="" /></a> <a href="#"><img src="css/images/logo2.gif" alt="" /></a> <a href="#"><img src="css/images/logo3.gif" alt="" /></a> <a href="#"><img src="css/images/logo4.gif" alt="" /></a> <a href="#"><img src="css/images/logo5.gif" alt="" /></a> </div>
+        </div>
+        <!-- End Brands -->
+				<!-- End Brands -->
+				<!-- Footer -->
+				<div id="footer">
+					<div class="left">
+						<a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span>
+						<a href="#">My Account</a> <span>|</span> <a href="#">The
+							Store</a> <span>|</span> <a href="#">Contact</a>
+					</div>
+					<div class="right">
+						&copy; Design by Grad Students at <a href="https://web.iit.edu">Illinois
+							Tech</a>
+					</div>
+				</div>
+				<!-- End Footer -->
 			</div>
+			<!-- End Container -->
 		</div>
-		<!-- End Brands -->
-		<!-- Footer -->
-		<div id="footer">
-			<div class="left">
-				<a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span>
-				<a href="#">My Account</a> <span>|</span> <a href="#">The Store</a>
-				<span>|</span> <a href="#">Contact</a>
-			</div>
-			<div class="right">
-				&copy; Design by Grad Students at <a href="https://web.iit.edu">Illinois
-					Tech</a>
-			</div>
-		</div>
-		<!-- End Footer -->
+		<!-- End Content -->
+	</div>
+	<!-- End Main -->
+	</div>
 </body>
 </html>
+		

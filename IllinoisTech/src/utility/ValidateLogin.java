@@ -19,8 +19,10 @@ public class ValidateLogin {
 		boolean ret = false;
 		
 		if(mysql.doesUserExists(this.email)){
+			System.out.println("user exists");
 			ret = mysql.matchPassword(this.email, this.pass);
 		}
+		System.out.println(ret);
 		return ret;
 	}
 
