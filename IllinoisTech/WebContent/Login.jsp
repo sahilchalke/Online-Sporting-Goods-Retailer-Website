@@ -73,6 +73,11 @@
 						<div align="center">
 							<h2>Login</h2>
 						</div>
+						<%
+							if(request.getAttribute("status")!=null){
+								out.println("<br><h4 align=\"center\"> Invalid username/password.</h4>");
+							}
+						%>
 						<label><b>Email Id:</b></label><br> 
 						<input type="text" placeholder="Enter Email" name="email" id = "email" required><br> 
 						

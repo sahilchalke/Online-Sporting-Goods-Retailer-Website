@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="utility.ValidateLogin, database.MySqlJDBC, bean.Cart" %>
+    <%@ page import="utility.ValidateLogin, database.MySqlJDBC, bean.Cart, bean.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +12,7 @@
 	
 	String email = request.getParameter("email");
 	String pass = request.getParameter("psw");
-	//User user = new User();
+	User user = new User();
 	Cart cart = new Cart();
 	ValidateLogin validate = new ValidateLogin(email, pass);
 	if(validate.validateUser()){
@@ -24,9 +24,8 @@
 		//}
 		response.sendRedirect("index.html");
 	}else{
-		request.setAttribute("status", "invalid");
-		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-		rd.forward(request, response);
+		request.setAttribute("status", "value");
+		request.getRequestDispatcher("Login.jsp").forward(request, response);
 	}
 
 %>
