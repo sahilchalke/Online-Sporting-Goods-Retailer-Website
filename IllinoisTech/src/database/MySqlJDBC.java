@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import bean.Cart;
+import bean.User;
 
 public class MySqlJDBC implements DatabaseConstants {
 
@@ -120,6 +121,53 @@ public class MySqlJDBC implements DatabaseConstants {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public User getUserData(String email){
+		
+		User user = new User();
+	
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from user where Email = '" + email + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				user.setAddress(rs.getString("Address"));
+				user.setEmail(email);
+				user.setPhonenumber(rs.getString("PhoneNumber"));
+				user.setUsername(rs.getString("UserName"));
+				user.setRole("customer");
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public int completeUserProfile(String phonenumber, String address,
+			String email) {
+		
+		int i = 0;
+		
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "update user set Address = '" + address + "', PhoneNumber = '" + phonenumber + "' where email = '" + email + "'";
+			System.out.println(sqlQuery);
+			i = stmt.executeUpdate(sqlQuery);
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return i;
 	}
 
 }

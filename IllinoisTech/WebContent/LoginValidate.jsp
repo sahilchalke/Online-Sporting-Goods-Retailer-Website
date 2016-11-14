@@ -17,12 +17,15 @@
 	ValidateLogin validate = new ValidateLogin(email, pass);
 	if(validate.validateUser()){
 		MySqlJDBC mysql = new MySqlJDBC();
-		out.println("Success");
-		//user = mysql.getUserData(email);
-		//if(user is not manager){
-			//cart = mysql.getUserCart(user.getUserId());
-		//}
-		response.sendRedirect("index.html");
+		user = mysql.getUserData(email);
+		if(user.getRole().equals("customer")){
+			cart = mysql.getUserCart(user.getUid());
+			request.getSession().setAttribute("userData", user);
+			request.getSession().setAttribute("userCart", cart);
+		}
+		//redirect to user home. pending
+		System.out.println(user.getUsername());
+		response.sendRedirect("UserHome.jsp");
 	}else{
 		request.setAttribute("status", "value");
 		request.getRequestDispatcher("Login.jsp").forward(request, response);

@@ -88,7 +88,7 @@
     	 var url = "fbservlet?email="+response.email+"&name="+response.name;
     	    req = initRequest();
     	    req.open("GET", url, true);
-    	   // req.onreadystatechange = callback;
+    	    req.onreadystatechange = callback;
     	    req.send(null);
     });
   }
@@ -103,13 +103,11 @@
 	        return new ActiveXObject("Microsoft.XMLHTTP");
 	    }
 	}
+  
+  function callback(){  
+		window.top.location = "UserHome.jsp?value=fromfb";
+  }
 	  </script>
-	  
-	  <%!
-	  public void login(String name, String email){
-		System.out.println(email);  
-	  }
-	  %>
 	  
 </head>
 <body>
@@ -191,8 +189,9 @@
 						<label><b>Don't have an account?</b></label><br>
 						<button type="submit">Create a new account</button>
 					</form>
-					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+					<label><b>Or</b></label><br>
+					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="width=100%">
+					</fb:login-button>
       	</div>
         <!-- Brands -->
         <div class="brands">
