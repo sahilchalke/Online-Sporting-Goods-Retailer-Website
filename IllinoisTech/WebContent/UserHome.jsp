@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="bean.Cart, bean.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,18 +15,22 @@
 </head>
 <body>
 <div id="body">
+<%
+	User user = (User)request.getSession().getAttribute("userData");
+    Cart cart = (Cart)request.getSession().getAttribute("userCart");
+%>
 <!-- Top -->
 <div id="top">
   <div class="shell">
     <!-- Header -->
     <div id="header">
-      <h1 id="logo"><a href="#">IllinoisTech Sporting Goods</a></h1>
+      <h1 id="logo"><a href="UserHome.jsp">IllinoisTech Sporting Goods</a></h1>
       <div id="navigation">
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="UserHome.jsp">Home</a></li>
           <li><a href="#">Support</a></li>
-          <li><a href="Login.jsp">Login</a></li>
-          <li><a href="Signup.html">Sign Up</a></li>
+          <li><a href="#">My Orders</a></li>
+          <li><a href="#">Trending</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </div>
@@ -52,6 +59,9 @@
   <div class="shell">
     <!-- Search, etc -->
     <div class="options">
+    <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	<h4>Search IllinoisTech</h4>
+    </div>
       <div class="search">
         <form action="#" method="post">
           <span class="field">
@@ -60,11 +70,38 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
+    <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px;">
+      	<h4>Hello, <%=user.getUsername() %></h4>
+      </div>  
+      <div class="right" style="float: none;"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
     </div>
+    
     <!-- End Search, etc -->
     <!-- Content -->
     <div id="content">
+    <%
+    	if(request.getSession().getAttribute("userProf").equals("incomplete")){%>
+    		<div id="container">
+						<div id="login_container">
+							<form method="post" action="fbservlet?value=profilecomplete">
+								<div align="center">
+									<h2>Kindly complete your profile</h2><br></br>
+								</div>
+								<label><b>Phone number:</b></label><br> 
+								<input type="text" placeholder="Enter your phone number" name="phonenumber" id="phonenumber" required><br>
+								<label><b>Address:</b></label><br> 
+								<input type="text" placeholder="Enter your address" name="address" id="address" required><br>
+								<input type="hidden" name="email" value="<%=user.getEmail()%>"></input>
+								<center>
+									<button type="submit" name="signup">Complete Profile</button>
+									<br>
+								</center>
+							</form>
+						</div>
+					<br> <br>
+    				
+    	<% }else{%>
+    
       <!-- Tabs -->
       <div class="tabs">
         <ul>
@@ -236,6 +273,7 @@
           </div>
           <!-- End Third Tab Content -->
         </div>
+        <%} %>
         <!-- Brands -->
         <div class="brands">
           <h3>Brands</h3>
@@ -253,6 +291,7 @@
     </div>
     <!-- End Content -->
   </div>
+</div>
 </div>
 </div>
 <!-- End Main -->
