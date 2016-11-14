@@ -77,7 +77,7 @@
 					<!--Login Container -->
 					<div id="container">
 						<div id="login_container">
-							<form action='LoginValidate.jsp' method="POST">
+							<form action='AddProductsDB.jsp' method="POST">
 								<div align="center">
 									<h2>Product To Added</h2>
 								</div>
