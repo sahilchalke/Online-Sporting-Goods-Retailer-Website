@@ -8,7 +8,5 @@ public interface DatabaseConstants {
 
 		//  Database credentials
 		static final String USER = "root";
-		//Enter your db pass.
-		static final String PASS = "root";
-
+		static final String PASS = "Dhruvit@mysql";
 }

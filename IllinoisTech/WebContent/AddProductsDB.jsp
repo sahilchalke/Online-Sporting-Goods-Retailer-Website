@@ -18,17 +18,8 @@
 	String iPath = request.getParameter("iPath");
 	String price = request.getParameter("price");
 	String discount = request.getParameter("discount");
-	String active = request.getParameter("active");
-	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, active);
+	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, "1");
 	System.out.println("Successful");
-	
-	
-	
-	
-	
-	
-	
-
 %>
 </body>
 </html>
