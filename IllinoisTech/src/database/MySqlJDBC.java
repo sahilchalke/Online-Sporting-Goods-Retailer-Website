@@ -134,6 +134,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			String insertProduct = "Insert into Products(PID, RetailerId, Category, ProductName, ImagePath, Price, Discount,Active) values('"
 					+ pid + "', '" + rid + "', '" + category + "', '" + pName + "', '" + iPath + "', '" + price
 					+ "', '" + discount + "' ,'" + active + "')";
+			System.out.println(insertProduct);
 
 			int i = stmt.executeUpdate(insertProduct);
 

@@ -16,6 +16,8 @@
 <body>
 <div id="body">
 <%
+	if(request.getSession().getAttribute("userData") == null || request.getSession().getAttribute("userCart") == null)
+		System.out.println("User/Cart null");
 	User user = (User)request.getSession().getAttribute("userData");
     Cart cart = (Cart)request.getSession().getAttribute("userCart");
 %>
@@ -30,8 +32,8 @@
           <li><a href="UserHome.jsp">Home</a></li>
           <li><a href="#">Support</a></li>
           <li><a href="#">My Orders</a></li>
-          <li><a href="#">Trending</a></li>
           <li><a href="#">Contact</a></li>
+          <li><a href="index.jsp?value=logout">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -105,8 +107,8 @@
       <!-- Tabs -->
       <div class="tabs">
         <ul>
-          <li><a href="#" class="active"><span>Baseball</span></a></li>
-		  <li><a href="#" class="active"><span>Basketball</span></a></li>
+          <li><a href="#"><span>Baseball</span></a></li>
+		  <li><a href="#"><span>Basketball</span></a></li>
           <li><a href="#"><span>Soccer</span></a></li>
           <li><a href="#"><span>Football</span></a></li>
           <li><a href="#"><span>Other</span></a></li>

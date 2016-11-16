@@ -35,7 +35,7 @@ public class fbservlet extends HttpServlet {
 			request.getSession().setAttribute("userData", user);
 			request.getSession().setAttribute("userCart", cart);
 			System.out.println("Add: " + user.getAddress());
-			if(user.getAddress() == null || user.getPhonenumber() == null || user.getAddress().equals("") || user.getPhonenumber().equals("")){
+			if(user.getAddress().equals("") || user.getPhonenumber().equals("")){
 				System.out.println("FB user profile incomplte.");
 				request.getSession().setAttribute("userProf", "incomplete");
 			}else
