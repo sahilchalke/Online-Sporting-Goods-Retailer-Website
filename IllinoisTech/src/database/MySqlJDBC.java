@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import bean.Cart;
+import bean.Products;
 import bean.User;
 
 public class MySqlJDBC implements DatabaseConstants {
@@ -114,7 +115,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
 			String insertUser = "Insert into user(UID, UserName, Password, Type, Email, PhoneNumber, Address) values('" + uid + "', '" + username + "', '" + 
-													 password + "', '" + role + "', '" + email + "', '" + phone +"', '" + address + "')";
+					password + "', '" + role + "', '" + email + "', '" + phone +"', '" + address + "')";
 
 			int i = stmt.executeUpdate(insertUser);
 
@@ -122,11 +123,11 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public User getUserData(String email){
-		
+
 		User user = new User();
-	
+
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
@@ -151,9 +152,9 @@ public class MySqlJDBC implements DatabaseConstants {
 
 	public int completeUserProfile(String phonenumber, String address,
 			String email) {
-		
+
 		int i = 0;
-		
+
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
@@ -168,6 +169,38 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 		return i;
+	}
+
+	public static ArrayList<Products> selectProducts(String categ) {
+
+		ArrayList<Products> prodInfo=new ArrayList<Products>();
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from products where Category = '" + categ + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				if(!prodInfo.contains(rs.getString(1))){
+					
+					Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+					
+					prodInfo.add(p);
+
+				}
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+
+
+		return prodInfo;
+
+
+
 	}
 
 }
