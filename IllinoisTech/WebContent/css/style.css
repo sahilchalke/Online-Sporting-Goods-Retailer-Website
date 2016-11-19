@@ -27,6 +27,15 @@ a:hover { color:#333; }
 
 h3 { font-size:15px; line-height:18px; color:#bcbcbc; text-transform: uppercase; }
 
+h4 {
+	color: #DE2D3A;
+	font-size: 24px;
+	font-weight: normal;
+	margin-bottom: 10px;
+	letter-spacing: -1px;
+	font-family: 'Pontano Sans', Arial, sans-serif;
+}
+
 h1#logo { font-size:0; line-height:0; width:550px; height:61px; float:left; }
 h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(images/logo.jpg); }
 
