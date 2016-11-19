@@ -8,12 +8,13 @@ import java.sql.Statement;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
 
 import bean.Cart;
 import bean.Products;
 import bean.User;
+import bean.Product;
 
 public class MySqlJDBC implements DatabaseConstants {
 
@@ -190,7 +191,123 @@ public class MySqlJDBC implements DatabaseConstants {
 		return i;
 	}
 	
+
+	
+public Product getProducts(String productName){
+		
+		Product productObj = new Product();
+	
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products where productname = '" + productName + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductname(rs.getString("ProductName"));
+				productObj.setImage(rs.getString("ImagePath"));
+				productObj.setPrice(rs.getString("Price"));
+				productObj.setDiscount("Discount");
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return productObj;
+	}
+
+public HashMap<String,Product> getProductList(){
+	
+	HashMap<String,Product> map =new HashMap<String,Product>();
+	Product productObj;
+
+	try{
+		conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		stmt = conn.createStatement();
+		sqlQuery = "select * from Products";
+		ResultSet rs = stmt.executeQuery(sqlQuery);
+		
+
+		while(rs.next()){
+			System.out.println(rs.getString("ProductName"));
+			productObj = new Product();
+			productObj.setPid(rs.getString("Pid"));
+			productObj.setRetailerid(rs.getString("RetailerId"));
+			productObj.setCategory(rs.getString("Category"));
+			productObj.setProductname(rs.getString("ProductName"));
+			productObj.setImage(rs.getString("ImagePath"));
+			productObj.setPrice(rs.getString("Price"));
+			productObj.setDiscount(rs.getString("Discount"));
+			productObj.setActive(rs.getString("Active"));
+			//System.out.println(productObj.getProductname() + productObj.getPid());
+			map.put(productObj.getPid(),productObj);
+		}
+		Product prod = new Product();
+		for (Map.Entry<String, Product> entry : map.entrySet()) {
+	 		prod = entry.getValue();
+	 		System.out.println("Product name: " + prod.getProductname() + "Product id: " + prod.getPid());
+		}
+		
+		//Close db connection.
+		stmt.close();
+		conn.close();
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	return map;
+}
+
+public void updateProducts(String category,String pid,String rid,String pName ,String iPath,String price,String discount,String active) {
+	
+	int i = 0;
+	
+	try{
+		conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		stmt = conn.createStatement();
+		sqlQuery = "update products set Category = '" + category + "', Pid = '" + pid + "',"
+				+ "RetailerId = '" + rid + "',ProductName = '" + pName + "',"
+				+ "ImagePath = '" + iPath + "',Price = '" + price + "',Discount = '" + discount + "',Active ='" + active + "' "
+						+ "where ProductName = '" + pName + "'";
+		System.out.println(sqlQuery);
+		i = stmt.executeUpdate(sqlQuery);
+
+		//Close db connection.
+		stmt.close();
+		conn.close();
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	
+}
+
+public boolean deleteProduct(String Pid) {
+	
+
+
+	try{
+		conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		stmt = conn.createStatement();
+		sqlQuery = "delete from products where Pid = '"+Pid+"'" ;
+		System.out.println(sqlQuery);
+		int rs = stmt.executeUpdate(sqlQuery);
+		//Close db connection.
+		stmt.close();
+		conn.close();
+		if(rs == 0)
+			return false;
+		return true;
+	}catch(SQLException e){
+		e.printStackTrace();
+		return false;
+	}
+	
+}
+
 	public static ArrayList<Products> selectProducts(String categ) {
+
 
 		ArrayList<Products> prodInfo=new ArrayList<Products>();
 
