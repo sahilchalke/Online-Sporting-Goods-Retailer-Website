@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
 <%@page import="bean.Products"%>
+<%@ page import="com.mongodb.DBCursor"%>
 <%@page import="database.MySqlJDBC"%>  
+
+<%@ page import="com.mongodb.BasicDBObject"%>
+<%@page import="database.MongoDbUtil"%>
 <%  MySqlJDBC mysql = new MySqlJDBC(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -81,25 +86,27 @@
           <li><a href="#"><span>Football</span></a></li>
           <li><a href="#"><span>Other</span></a></li> -->
           <li><a href="#" class="active"><span>Product Information</span></a></li>
+          <li><a href="#" ><span>Read Reviews</span></a></li>
+          <li><a href="#" ><span>Write Reviews</span></a></li>
         </ul>
       </div>
       <!-- Tabs -->
       <!-- Container -->
-      
-      <div id="container">
-      <center>
-       <div class="tabbed">
-          <!-- First Tab Content -->
-          <div class="tab-content" style="display:block;">
-            <div class="items">
-              <div class="cl">&nbsp;</div>
        <%
        	String productName = request.getParameter("productName");
        	String price = request.getParameter("productPrice");
        	String discount = request.getParameter("discount");
        	String image = request.getParameter("productImage");
        %>
-       <center>
+      <div id="container">
+      
+       <div class="tabbed">
+          <!-- First Tab Content -->
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+      
+       
        <ul>
        <li>
                   <div class="image"> <img src="<%= image %>" alt="" style="width: 150px; height: 150px;"/></div>
@@ -114,30 +121,155 @@
 			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
 			            <input class = 'submit-button' type = 'submit'  value = 'Add To Cart' style="width: 100px; height: 30px;"/>
 			        </form>
-			        <br>
-			        <form class = 'submit-button' method = 'post' action = 'WriteReview.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=image %>' />
-			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'Write Review' style="width: 100px; height: 30px;"/>
-			        </form>
-			        <br>
-			        <form class = 'submit-button' method = 'post' action = 'ReadReview.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=image %>' />
-			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'Read Review' style="width: 100px; height: 30px;"/>
-			        </form>
+			        
                   </li>
                   </ul>
-                  </center>
+                 
                   </div>
                   </div>
                  
                   
-          <!-- End 5th -->
+          <!-- End Prod Info -->
+         <div class="tabbed">
+          <!-- second Tab Content -->
+          <%
+          String searchField = "productName";
+          String searchParameter = request.getParameter("productName");
+          MongoDbUtil.getConnection();
+          BasicDBObject searchQuery = new BasicDBObject();
+          searchQuery.put(searchField, searchParameter);
+
+          DBCursor cursor = MongoDbUtil.myReviews.find(searchQuery);
+          %>
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+      
+       
+      
+                  <h3> Reviews For: <%= searchParameter %></h3>
+		
+		<%  if(cursor.count() == 0){
+			%>
+			There are no reviews for this product.
+		<% 
+		}else{
+
+			
+
+			String pName = "";
+			String userID = "";
+			String reviewRating = "";
+			String reviewDate =  "";
+			String reviewText = "";
+			String prodPrice = "";
+			
+			
+
+			while (cursor.hasNext()) {
+				%>
+				 <ul>
+       <li>
+				<br><br><hr>
+				
+				<table class='specialtable'>
+				<% BasicDBObject obj = (BasicDBObject) cursor.next(); %>				
+
+				<tr>
+				<td> Product Name: </td>
+				<% pName = obj.getString("productName"); %>
+				<td><%= pName %></td>
+				</tr>
+				
+				<tr>
+				<td> Product Price: </td>
+				<% prodPrice = obj.getString("productPrice"); %>
+				<td><%= prodPrice %></td>
+				</tr>
+				
+				
+				
+				<tr>
+				<td> User ID: </td>
+				<% userID = obj.getString("userName"); %>
+				<td><%= userID %></td>
+				
+				</tr>
+				
+				
+				<tr>
+				<td> Review Rating: </td>
+				<% reviewRating = obj.getString("rating").toString(); %>
+				<td><%= reviewRating %></td>
+				</tr>
+
+				<tr>
+				<td> Review Date: </td>
+				<% reviewDate = obj.getString("date"); %>
+				<td><%= reviewDate %></td>
+				</tr>
+
+				<tr>
+				<td> Review Text: </td>
+				<% reviewText = obj.getString("text"); %>
+				<td><%= reviewText %></td>
+				</tr>
+				</table>
+				<br><br>
+				</li>
+                  </ul>
+			<% 
+			}
+		}	
+		%>        
+			        
+                  
+                 
+                  </div>
+                  </div>
+          <!-- End View  Review -->
+          <div class="tabbed">
+          <!-- Third Tab Content -->
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+      
+       
+       <ul>
+       <li>
+                  
+                  <form method='post' action='WriteReviewSuccess.jsp'>
+			<br>
+			<h3>Write Review</h3>
+			<table class='specialtable'>
+			<tr><td>Product Name: </td><td> <%= productName %></td></tr>
+			<tr><td>Product Price: </td><td> <%= price %></td></tr>
+			<tr><td>Username: </td><td> <input type='text' name='uid'></td></tr>
+			<tr><td>ReviewRating (1 to 5): </td><td> <input type='text' name='rating'></td></tr>
+			<tr><td>ReviewDate: </td><td> <input type='date' name='rdate'></td></tr>
+			<tr><td>ReviewText: </td><td> <input type='text' name='reviewtext'></td></tr>
+			<tr></tr>
+			<tr></tr>
+			<tr></tr>
+			<tr>
+			<td colspan='2'>
+			<input type='submit' name='review' value='Submit Review' />
+			<input type='hidden' name = 'productName' value = '<%=productName %>'>
+            <input type='hidden' name = 'productPrice' value = '<%= price %>'>
+            <input type='hidden' name = 'productImage' value = '<%= image %>'>
+            <input type='hidden' name = 'productDiscount' value = '<%= discount %>'>
+           	</td>
+			</tr>
+			</table>
+			</form>
+			        
+                  </li>
+                  </ul>
+                 
+                  </div>
+                  </div>
+                  
+          <!-- End Write Review -->
         </div>
         <!-- Brands -->
         <div class="brands">
