@@ -182,7 +182,7 @@
 						<button type="submit">Login</button><br>
 						<span>Forgot <a href="#">password?</a></span><br> <br>
 					</form>
-					<form action="Registration.html">
+					<form action="Signup.html">
 						<label><b>Don't have an account?</b></label><br>
 						<button type="submit">Create a new account</button>
 					</form>

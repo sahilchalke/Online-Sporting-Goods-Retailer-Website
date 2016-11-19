@@ -11,6 +11,18 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
+<style>
+#login_container form input, #login_container form select, #login_container form textarea {
+	padding: 5px;
+	color: #333333;
+	border: 1px solid #ddd;
+	border-right:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	background-color:#fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+</style>
 </head>
 <body>
 	<div id="body">
@@ -77,15 +89,14 @@
 					<!--Login Container -->
 					<div id="container">
 						<div id="login_container">
-							<form action='LoginValidate.jsp' method="POST">
+							<form action='AddProductsDB.jsp' method="POST">
 								<div align="center">
-									<h2>Product To Added</h2>
+									<h2>Product To Added</h2><br><br>
 								</div>
-								<label><b>Category:</b></label><br>
+								<label><b>Category:</b></label>
 								<br>
 								<div class="form-group">
-									<label for="sel1">Select list:</label> <select
-										name="category" id="sel1">
+								 <select name="category" id="sel1">
 										<option value=Baseball>Baseball</option>
 										<option value=Basketball>Basketball</option>
 										<option value=Soccer>Soccer</option>
@@ -105,21 +116,14 @@
 								<label><b>ProductName:</b></label><br> <input type="text"
 									placeholder="Enter PName" name="pName" id="pName" required><br>
 
-								<label><b>Image:</b></label><br> <input type="text"
-									placeholder="Enter IPath" name="iPath" id="iPath" required><br>
+								<label><b>Image:</b></label><br>
+								<input type="file" name="iPath" id="iPath" accept="css/images/*" required><br><br>
 
 								<label><b>Price:</b></label><br> <input type="text"
 									placeholder="Enter Price" name="price" id="price" required><br>
 
-
-
 								<label><b>Discount:</b></label><br> <input type="text"
-									placeholder="Enter Discount" name="discount" id="discount"
-									required><br> 
-									
-									<label><b>Active:</b></label><br>
-								<input type="text" value="1" name="active" id="active" required><br>
-
+									placeholder="Enter Discount" name="discount" id="discount" required><br> 
 								<button type="submit">Add</button>
 								
 								<br>

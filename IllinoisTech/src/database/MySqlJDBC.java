@@ -114,12 +114,54 @@ public class MySqlJDBC implements DatabaseConstants {
 			stmt = conn.createStatement();
 			String insertUser = "Insert into user(UID, UserName, Password, Type, Email, PhoneNumber, Address) values('" + uid + "', '" + username + "', '" + 
 													 password + "', '" + role + "', '" + email + "', '" + phone +"', '" + address + "')";
-
+             
 			int i = stmt.executeUpdate(insertUser);
+			
 
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	public void insertRetailer(String username, String email){
 
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("ddMMyyHHmmSS"); 
+		String RetailerId = format.format(date);
+		String flag="0";
+    	System.out.println(username + email + RetailerId + flag);
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			String insertRetailer = "Insert into Retailer(RetailerId, RetailerName, Flag, Email) values('" + RetailerId + "', '" + username + "', '" + flag +
+					"', '" + email +  "')";	
+			System.out.println( insertRetailer);
+
+			int i = stmt.executeUpdate(insertRetailer);
+			
+						
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void insertProduct(String category, String pid, String rid, String pName, String iPath, String price,String discount,String active) {
+
+		
+
+		try {
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+			String insertProduct = "Insert into Products(PID, RetailerId, Category, ProductName, ImagePath, Price, Discount,Active) values('"
+					+ pid + "', '" + rid + "', '" + category + "', '" + pName + "', '" + iPath + "', '" + price
+					+ "', '" + discount + "' ,'" + active + "')";
+			System.out.println(insertProduct);
+
+			int i = stmt.executeUpdate(insertProduct);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
