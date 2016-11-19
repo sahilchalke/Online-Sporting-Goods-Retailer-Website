@@ -82,5 +82,6 @@ public class Products {
 
 	public void setRetailerName(String retailerName) {
 		this.retailerName = retailerName;
-	}
+	}	
+	
 }

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -192,7 +192,123 @@ public class MySqlJDBC implements DatabaseConstants {
 		return i;
 	}
 
-	public static ArrayList<Products> selectProducts(String categ) {
+
+	public Products getProducts(String productName){
+
+		Products productObj = new Products();
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products where productname = '" + productName + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
+				productObj.setDiscount("Discount");
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return productObj;
+	}
+
+	public HashMap<String,Products> getProductList(){
+
+		HashMap<String,Products> map =new HashMap<String,Products>();
+		Products productObj;
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+
+			while(rs.next()){
+				System.out.println(rs.getString("ProductName"));
+				productObj = new Products();
+				productObj.setPid(rs.getString("Pid"));
+				productObj.setRetailerId(rs.getString("RetailerId"));
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
+				productObj.setDiscount(rs.getString("Discount"));
+				productObj.setActive(rs.getString("Active"));
+				//System.out.println(productObj.getProductname() + productObj.getPid());
+				map.put(productObj.getPid(),productObj);
+			}
+			Products prod = new Products();
+			for (Map.Entry<String, Products> entry : map.entrySet()) {
+				prod = entry.getValue();
+				System.out.println("Product name: " + prod.getProductName() + "Product id: " + prod.getPid());
+			}
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	public void updateProducts(String category,String pid,String rid,String pName ,String iPath,String price,String discount,String active) {
+
+		int i = 0;
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "update products set Category = '" + category + "', Pid = '" + pid + "',"
+					+ "RetailerId = '" + rid + "',ProductName = '" + pName + "',"
+					+ "ImagePath = '" + iPath + "',Price = '" + price + "',Discount = '" + discount + "',Active ='" + active + "' "
+					+ "where ProductName = '" + pName + "'";
+			System.out.println(sqlQuery);
+			i = stmt.executeUpdate(sqlQuery);
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+
+	}
+
+	public boolean deleteProduct(String Pid) {
+
+
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "delete from products where Pid = '"+Pid+"'" ;
+			System.out.println(sqlQuery);
+			int rs = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+			if(rs == 0)
+				return false;
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+
+	public ArrayList<Products> selectProducts(String categ) {
+
 
 		ArrayList<Products> prodInfo=new ArrayList<Products>();
 
@@ -222,7 +338,6 @@ public class MySqlJDBC implements DatabaseConstants {
 
 		HashMap<String, Products> cartMap = new HashMap<String, Products>();
 		try{
-
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
 			System.out.println("userId" + cart.getUserId());
@@ -256,5 +371,4 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-
 }
