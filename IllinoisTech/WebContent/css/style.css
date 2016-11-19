@@ -27,6 +27,15 @@ a:hover { color:#333; }
 
 h3 { font-size:15px; line-height:18px; color:#bcbcbc; text-transform: uppercase; }
 
+h4 {
+	color: #DE2D3A;
+	font-size: 24px;
+	font-weight: normal;
+	margin-bottom: 10px;
+	letter-spacing: -1px;
+	font-family: 'Pontano Sans', Arial, sans-serif;
+}
+
 h1#logo { font-size:0; line-height:0; width:550px; height:61px; float:left; }
 h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(images/logo.jpg); }
 
@@ -57,7 +66,7 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 
 #main { width:100%; background:url(images/main.gif) repeat-x 0 0;}
 
-.options { height:47px; white-space:nowrap; padding-top:3px; width: 800px;}
+.options { height:47px; white-space:nowrap; padding-top:3px; width: 1000px;}
 .options .search{ float:left; padding:6px 0 0 0; background:url(images/border.gif) repeat-y right 0; height:33px; margin-right:12px;}
 .options .search .field{ float:left; width:191px; height:21px; background:url(images/field.gif); padding:6px 5px 0 5px;}
 .options .search .field input{ width:191px; border:0; background:transparent; color:#fff; font-weight: bold;}
@@ -149,3 +158,5 @@ width: 60%;
 	border: 1px solid #ccc;
 	box-sizing: border-box;
 }
+
+
