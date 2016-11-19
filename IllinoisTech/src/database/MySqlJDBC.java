@@ -29,6 +29,29 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 	}
 
+	public void insertRetailer(String username, String email){
+
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("ddMMyyHHmmSS"); 
+		String RetailerId = format.format(date);
+		String flag="0";
+    	System.out.println(username + email + RetailerId + flag);
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			String insertRetailer = "Insert into Retailer(RetailerId, RetailerName, Flag, Email) values('" + RetailerId + "', '" + username + "', '" + flag +
+					"', '" + email +  "')";	
+			System.out.println( insertRetailer);
+
+			int i = stmt.executeUpdate(insertRetailer);
+			
+						
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 	public Cart getUserCart(String userid) {
 
 		Cart cart = new Cart();
