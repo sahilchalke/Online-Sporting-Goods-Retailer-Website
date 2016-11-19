@@ -2,21 +2,9 @@ package bean;
 
 public class Products {
 	
-	public Products(String pid, String retailerId, String category, String productName, String imagePath, String prce,
-			String discount, String active) {
-		super();
-		this.pid = pid;
-		this.retailerId = retailerId;
-		this.category = category;
-		this.productName = productName;
-		this.imagePath = imagePath;
-		this.prce = prce;
-		this.discount = discount;
-		this.active = active;
-	}
-	
 	String pid;
 	String retailerId;
+	String retailerName;
 	String category;
 	String productName;
 	String imagePath;
@@ -24,6 +12,21 @@ public class Products {
 	String discount;
 	String active;
 	
+	public Products(){}
+	
+	public Products(String pid, String retailerId, String retailerName, String category, String productName, String imagePath, String prce,
+			String discount, String active) {
+		super();
+		this.pid = pid;
+		this.retailerId = retailerId;
+		this.retailerName = retailerName;
+		this.category = category;
+		this.productName = productName;
+		this.imagePath = imagePath;
+		this.prce = prce;
+		this.discount = discount;
+		this.active = active;
+	}
 	
 	public String getPid() {
 		return pid;
@@ -73,7 +76,11 @@ public class Products {
 	public void setActive(String active) {
 		this.active = active;
 	}
-	
-	
-	
+	public String getRetailerName() {
+		return retailerName;
+	}
+
+	public void setRetailerName(String retailerName) {
+		this.retailerName = retailerName;
+	}
 }

@@ -75,7 +75,7 @@
     <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px;">
       	<h4>Hello, <%=user.getUsername() %></h4>
       </div>  
-      <div class="right" style="float: none;"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
+      <div class="right" style="float: none;"> <span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
     </div>
     
     <!-- End Search, etc -->

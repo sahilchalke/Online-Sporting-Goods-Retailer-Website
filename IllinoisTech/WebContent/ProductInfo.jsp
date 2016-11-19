@@ -87,7 +87,6 @@
       <!-- Container -->
       
       <div id="container">
-      <center>
        <div class="tabbed">
           <!-- First Tab Content -->
           <div class="tab-content" style="display:block;">
@@ -98,15 +97,17 @@
        	String price = request.getParameter("productPrice");
        	String discount = request.getParameter("discount");
        	String image = request.getParameter("productImage");
+       	String retailer = request.getParameter("retailerName");
        %>
-       <center>
        <ul>
        <li>
                   <div class="image"> <img src="<%= image %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= productName %></span><br/> </p>        
-                  <p class="price">Price: <strong><%= price %></strong></p>
-                  <p> Discount : <span><%= discount %></span><br /></p>
+                  <br><p> Product Name: <span><%= productName %></span><br/> </p>
+                  <p> Retailer Name: <span><%= retailer %></span><br/> </p>        
+                  <p>Price: <span><%= price %></span></p>
+                  <p> Discount: <span><%= discount %></span><br /></p>
                   <br>
+                  <center>
                   <form class = 'submit-button' method = 'post' action = 'AddToCart.jsp'  >
 			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
 			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
@@ -114,25 +115,9 @@
 			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
 			            <input class = 'submit-button' type = 'submit'  value = 'Add To Cart' style="width: 100px; height: 30px;"/>
 			        </form>
-			        <br>
-			        <form class = 'submit-button' method = 'post' action = 'WriteReview.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=image %>' />
-			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'Write Review' style="width: 100px; height: 30px;"/>
-			        </form>
-			        <br>
-			        <form class = 'submit-button' method = 'post' action = 'ReadReview.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=image %>' />
-			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'Read Review' style="width: 100px; height: 30px;"/>
-			        </form>
+			        </center>
                   </li>
                   </ul>
-                  </center>
                   </div>
                   </div>
                  
@@ -150,7 +135,6 @@
           <div class="left"> <a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span> <a href="#">My Account</a> <span>|</span> <a href="#">The Store</a> <span>|</span> <a href="#">Contact</a> </div>
           <div class="right"> &copy; Design by Grad Students at <a href="https://web.iit.edu">Illinois Tech</a> </div>
         </div>
-        </center>
         <!-- End Footer -->
       </div>
       <!-- End Container -->

@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import bean.Cart;
 import bean.Products;
@@ -45,6 +45,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			}
 			cart.setProductList(productList);
 			cart.setUserId(userid);
+			System.out.println(cart.getUserId());
 			// Close db connection.
 			stmt.close();
 			conn.close();
@@ -123,10 +124,10 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void insertProduct(String category, String pid, String rid, String pName, String iPath, String price,String discount,String active) {
 
-		
+
 
 		try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -154,6 +155,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 
 			while(rs.next()){
+				user.setUid(rs.getString("Uid"));
 				user.setAddress(rs.getString("Address"));
 				user.setEmail(email);
 				user.setPhonenumber(rs.getString("PhoneNumber"));
@@ -189,7 +191,7 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return i;
 	}
-	
+
 	public static ArrayList<Products> selectProducts(String categ) {
 
 		ArrayList<Products> prodInfo=new ArrayList<Products>();
@@ -197,13 +199,12 @@ public class MySqlJDBC implements DatabaseConstants {
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
-			sqlQuery = "select * from products where Category = '" + categ + "'";
+			sqlQuery = "select * from products p inner join retailer r on p.RetailerId = r.RetailerId where p.Category = '" + categ + "'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			while(rs.next()){
 				if(!prodInfo.contains(rs.getString(1))){
-					
-					Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-					
+
+					Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
 					prodInfo.add(p);
 
 				}
@@ -214,12 +215,46 @@ public class MySqlJDBC implements DatabaseConstants {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-
-
 		return prodInfo;
+	}
 
+	public HashMap<String, Products> getCartProdFromDB(Cart cart){
 
+		HashMap<String, Products> cartMap = new HashMap<String, Products>();
+		try{
 
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			System.out.println("userId" + cart.getUserId());
+			sqlQuery = "select * from products p inner join retailer r on p.RetailerId = r.RetailerId where p.pid in (select pid from cart where uid = '" + cart.getUserId() + "')";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+				cartMap.put(p.getPid(), p);
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return cartMap;
+	}
+
+	public void removeProductFromCart(String prodId, String userId){
+
+		try{
+
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "delete from cart where pid = '" + prodId + "' and uid = '" + userId + "';";
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 }

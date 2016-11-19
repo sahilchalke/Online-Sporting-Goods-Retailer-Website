@@ -30,11 +30,11 @@ public class fbservlet extends HttpServlet {
 			}
 			User user = new User();
 			Cart cart = new Cart();
+			System.out.println(email);
 			user = mysql.getUserData(email);
 			cart = mysql.getUserCart(user.getUid());
 			request.getSession().setAttribute("userData", user);
 			request.getSession().setAttribute("userCart", cart);
-			System.out.println("Add: " + user.getAddress());
 			if(user.getAddress().equals("") || user.getPhonenumber().equals("")){
 				System.out.println("FB user profile incomplte.");
 				request.getSession().setAttribute("userProf", "incomplete");
