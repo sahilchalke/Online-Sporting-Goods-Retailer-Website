@@ -6,6 +6,7 @@ import com.mongodb.MongoClient;
 
 public class MongoDbUtil implements DatabaseConstants{
 	public static DBCollection myReviews;
+	public static DBCollection Comments;
 	public static void getConnection()
 	{
 		MongoClient mongo;
@@ -13,4 +14,6 @@ public class MongoDbUtil implements DatabaseConstants{
 		DB db = mongo.getDB("IllinoisTech");
 		myReviews= db.getCollection("myReviews");
 	}
+	
+	
 }

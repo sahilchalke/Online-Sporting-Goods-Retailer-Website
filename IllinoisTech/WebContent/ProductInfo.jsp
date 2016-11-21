@@ -1,3 +1,5 @@
+
+<%@page import="com.mongodb.DBCollection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
@@ -71,8 +73,7 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span>
-      </div>
+      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
@@ -80,12 +81,17 @@
       <!-- Tabs -->
       <div class="tabs">
         <ul>
+         <!--  <li><a href="#" class="active"><span>Baseball</span></a></li>
+		  <li><a href="#" class="active"><span>Basketball</span></a></li>
+          <li><a href="#"><span>Soccer</span></a></li>
+          <li><a href="#"><span>Football</span></a></li>
+          <li><a href="#"><span>Other</span></a></li> -->
           <li><a href="#" class="active"><span>Product Information</span></a></li>
           <li><a href="#" ><span>Read Reviews</span></a></li>
           <li><a href="#" ><span>Write Reviews</span></a></li>
         </ul>
       </div>
-      <!-- End Tabs -->
+      <!-- Tabs -->
       <!-- Container -->
        <%
        	String productName = request.getParameter("productName");
@@ -96,6 +102,7 @@
        	String productId = request.getParameter("productId");
        %>
       <div id="container">
+      
        <div class="tabbed">
           <!-- First Tab Content -->
           <div class="tab-content" style="display:block;">
