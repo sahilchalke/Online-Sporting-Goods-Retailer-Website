@@ -19,18 +19,17 @@
 			MySqlJDBC mysql = new MySqlJDBC();
 			user = mysql.getUserData(email);
 			try {
+				request.getSession().setAttribute("userData", user);
 				if (user.getRole().equalsIgnoreCase("customer")) {
 					System.out.println("Customer logged in.");
 					cart = mysql.getUserCart(user.getUid());
-					request.getSession().setAttribute("userData", user);
 					request.getSession().setAttribute("userCart", cart);
 					request.getSession().setAttribute("userProf", "complete");
+					response.sendRedirect("UserHome.jsp");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//redirect to user home. pending
-			response.sendRedirect("UserHome.jsp");
 		} else {
 			request.setAttribute("status", "value");
 			request.getRequestDispatcher("Login.jsp").forward(request,

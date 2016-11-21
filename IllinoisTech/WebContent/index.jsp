@@ -8,7 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>IllinoisTech Sporting Goods</title>
+<title>IllinoisTech Sporting Goods..</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <!--[if lte IE 6]><style type="text/css" media="screen">.tabbed { height:420px; }</style><![endif]-->
@@ -67,7 +67,7 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
+      <div class="right"> <span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
@@ -85,7 +85,6 @@
       <!-- Tabs -->
       <!-- Container -->
       <%
-      
       ArrayList<Products> baseball= new ArrayList<Products>();
       baseball = mysql.selectProducts("Baseball");
       %>
@@ -102,15 +101,16 @@
               %>
                 <li>
                   <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= p.getProductName() %></span><br/>         
-                  <p class="price">Wholesale Price: <strong><%= p.getPrce() %></strong></p>
-                  <p> Discount : <span><%= p.getDiscount() %></span><br />
-                   <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
-			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="width: 100px; height: 30px;"/>
+                  <br><p> Product Name : <span><%= p.getProductName() %></span> 
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>        
+                   <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'>
+                   		<input type='hidden' name = 'productId' value = '<%=p.getPid()%>'/>
+			            <input type='hidden' name = 'productName' value = '<%=p.getProductName()%>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
+			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce()%>' />
+			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath()%>' />
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount()%>' /><br></br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 45px; width: 100px; height: 30px;"/>
 			        </form>
                 </li>
               <%} %>
@@ -134,15 +134,16 @@
               
                 <li>
                   <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= p.getProductName() %></span><br/>         
-                  <p class="price">Wholesale Price: <strong><%= p.getPrce() %></strong></p>
-                  <p> Discount : <span><%= p.getDiscount() %></span><br />
-                   <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
+                  <br><p>Product Name : <span><%= p.getProductName() %></span> 
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>
+                   <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'>
+                   		<input type='hidden' name = 'productId' value = '<%=p.getPid()%>'/>
 			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
 			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
 			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
-			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="width: 100px; height: 30px;"/>
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
 			        </form>
                 </li>
               <%} %>
@@ -166,15 +167,16 @@
               
                <li>
                   <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= p.getProductName() %></span><br/>         
-                  <p class="price">Wholesale Price: <strong><%= p.getPrce() %></strong></p>
-                  <p> Discount : <span><%= p.getDiscount() %></span><br />
+                  <br><p>Product Name : <span><%= p.getProductName() %></span><br/>   
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>      
                    <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
+                   		<input type='hidden' name = 'productId' value = '<%=p.getPid()%>'/>
 			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
 			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
 			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
-			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="width: 100px; height: 30px;"/>
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
 			        </form>
                 </li>
               <%} %>
@@ -196,15 +198,16 @@
               %>
                 <li>
                   <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= p.getProductName() %></span><br/>         
-                  <p class="price">Wholesale Price: <strong><%= p.getPrce() %></strong></p>
-                  <p> Discount : <span><%= p.getDiscount() %></span><br />
+                  <br><p>Product Name : <span><%= p.getProductName() %></span><br/>      
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>   
                    <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
+                   		<input type='hidden' name = 'productId' value = '<%=p.getPid()%>'/>
 			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
 			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
 			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
-			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="width: 100px; height: 30px;"/>
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
 			        </form>
                 </li>
               <%} %>
@@ -227,15 +230,16 @@
               
                <li>
                   <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= p.getProductName() %></span><br/>         
-                  <p class="price">Wholesale Price: <strong><%= p.getPrce() %></strong></p>
-                  <p> Discount : <span><%= p.getDiscount() %></span><br />
+                  <br></br><p>Product Name : <span><%= p.getProductName() %></span>  
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>       
                    <form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
+                   		<input type='hidden' name = 'productId' value = '<%=p.getPid()%>'/>
 			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
 			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
 			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
-			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="width: 100px; height: 30px;"/>
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
 			        </form>
                 </li>
                  <%} %>
@@ -267,4 +271,3 @@
 <!-- End Main -->
 </body>
 </html>
->>>>>>> refs/remotes/origin/master

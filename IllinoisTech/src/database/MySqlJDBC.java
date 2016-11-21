@@ -5,16 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 import bean.Cart;
 import bean.Products;
 import bean.User;
-import bean.Product;
 
 public class MySqlJDBC implements DatabaseConstants {
 
@@ -26,6 +23,29 @@ public class MySqlJDBC implements DatabaseConstants {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void insertRetailer(String username, String email){
+
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("ddMMyyHHmmSS"); 
+		String RetailerId = format.format(date);
+		String flag="0";
+    	System.out.println(username + email + RetailerId + flag);
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			String insertRetailer = "Insert into Retailer(RetailerId, RetailerName, Flag, Email) values('" + RetailerId + "', '" + username + "', '" + flag +
+					"', '" + email +  "')";	
+			System.out.println( insertRetailer);
+
+			int i = stmt.executeUpdate(insertRetailer);
+			
+						
+
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -46,6 +66,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			}
 			cart.setProductList(productList);
 			cart.setUserId(userid);
+			System.out.println(cart.getUserId());
 			// Close db connection.
 			stmt.close();
 			conn.close();
@@ -124,10 +145,10 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void insertProduct(String category, String pid, String rid, String pName, String iPath, String price,String discount,String active) {
 
-		
+
 
 		try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -155,6 +176,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 
 			while(rs.next()){
+				user.setUid(rs.getString("Uid"));
 				user.setAddress(rs.getString("Address"));
 				user.setEmail(email);
 				user.setPhonenumber(rs.getString("PhoneNumber"));
@@ -190,13 +212,12 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return i;
 	}
-	
 
-	
-public Product getProducts(String productName){
-		
-		Product productObj = new Product();
-	
+
+	public Products getProducts(String productName){
+
+		Products productObj = new Products();
+
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
@@ -205,9 +226,9 @@ public Product getProducts(String productName){
 
 			while(rs.next()){
 				productObj.setCategory(rs.getString("Category"));
-				productObj.setProductname(rs.getString("ProductName"));
-				productObj.setImage(rs.getString("ImagePath"));
-				productObj.setPrice(rs.getString("Price"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
 				productObj.setDiscount("Discount");
 			}
 			//Close db connection.
@@ -219,94 +240,95 @@ public Product getProducts(String productName){
 		return productObj;
 	}
 
-public HashMap<String,Product> getProductList(){
-	
-	HashMap<String,Product> map =new HashMap<String,Product>();
-	Product productObj;
+	public HashMap<String,Products> getProductList(){
 
-	try{
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		stmt = conn.createStatement();
-		sqlQuery = "select * from Products";
-		ResultSet rs = stmt.executeQuery(sqlQuery);
-		
+		HashMap<String,Products> map =new HashMap<String,Products>();
+		Products productObj;
 
-		while(rs.next()){
-			System.out.println(rs.getString("ProductName"));
-			productObj = new Product();
-			productObj.setPid(rs.getString("Pid"));
-			productObj.setRetailerid(rs.getString("RetailerId"));
-			productObj.setCategory(rs.getString("Category"));
-			productObj.setProductname(rs.getString("ProductName"));
-			productObj.setImage(rs.getString("ImagePath"));
-			productObj.setPrice(rs.getString("Price"));
-			productObj.setDiscount(rs.getString("Discount"));
-			productObj.setActive(rs.getString("Active"));
-			//System.out.println(productObj.getProductname() + productObj.getPid());
-			map.put(productObj.getPid(),productObj);
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+
+			while(rs.next()){
+				System.out.println(rs.getString("ProductName"));
+				productObj = new Products();
+				productObj.setPid(rs.getString("Pid"));
+				productObj.setRetailerId(rs.getString("RetailerId"));
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
+				productObj.setDiscount(rs.getString("Discount"));
+				productObj.setActive(rs.getString("Active"));
+				//System.out.println(productObj.getProductname() + productObj.getPid());
+				map.put(productObj.getPid(),productObj);
+			}
+			Products prod = new Products();
+			for (Map.Entry<String, Products> entry : map.entrySet()) {
+				prod = entry.getValue();
+				System.out.println("Product name: " + prod.getProductName() + "Product id: " + prod.getPid());
+			}
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
-		Product prod = new Product();
-		for (Map.Entry<String, Product> entry : map.entrySet()) {
-	 		prod = entry.getValue();
-	 		System.out.println("Product name: " + prod.getProductname() + "Product id: " + prod.getPid());
+		return map;
+	}
+
+	public void updateProducts(String category,String pid,String rid,String pName ,String iPath,String price,String discount,String active) {
+
+		int i = 0;
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "update products set Category = '" + category + "', Pid = '" + pid + "',"
+					+ "RetailerId = '" + rid + "',ProductName = '" + pName + "',"
+					+ "ImagePath = '" + iPath + "',Price = '" + price + "',Discount = '" + discount + "',Active ='" + active + "' "
+					+ "where ProductName = '" + pName + "'";
+			System.out.println(sqlQuery);
+			i = stmt.executeUpdate(sqlQuery);
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
-		
-		//Close db connection.
-		stmt.close();
-		conn.close();
-	}catch(SQLException e){
-		e.printStackTrace();
+
 	}
-	return map;
-}
 
-public void updateProducts(String category,String pid,String rid,String pName ,String iPath,String price,String discount,String active) {
-	
-	int i = 0;
-	
-	try{
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		stmt = conn.createStatement();
-		sqlQuery = "update products set Category = '" + category + "', Pid = '" + pid + "',"
-				+ "RetailerId = '" + rid + "',ProductName = '" + pName + "',"
-				+ "ImagePath = '" + iPath + "',Price = '" + price + "',Discount = '" + discount + "',Active ='" + active + "' "
-						+ "where ProductName = '" + pName + "'";
-		System.out.println(sqlQuery);
-		i = stmt.executeUpdate(sqlQuery);
-
-		//Close db connection.
-		stmt.close();
-		conn.close();
-	}catch(SQLException e){
-		e.printStackTrace();
-	}
-	
-}
-
-public boolean deleteProduct(String Pid) {
-	
+	public boolean deleteProduct(String Pid) {
 
 
-	try{
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		stmt = conn.createStatement();
-		sqlQuery = "delete from products where Pid = '"+Pid+"'" ;
-		System.out.println(sqlQuery);
-		int rs = stmt.executeUpdate(sqlQuery);
-		//Close db connection.
-		stmt.close();
-		conn.close();
-		if(rs == 0)
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "delete from products where Pid = '"+Pid+"'" ;
+			System.out.println(sqlQuery);
+			int rs = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+			if(rs == 0)
+				return false;
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
 			return false;
-		return true;
-	}catch(SQLException e){
-		e.printStackTrace();
-		return false;
-	}
-	
-}
+		}
 
-	public static ArrayList<Products> selectProducts(String categ) {
+	}
+
+
+	public ArrayList<Products> selectProducts(String categ) {
 
 
 		ArrayList<Products> prodInfo=new ArrayList<Products>();
@@ -314,13 +336,12 @@ public boolean deleteProduct(String Pid) {
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
-			sqlQuery = "select * from products where Category = '" + categ + "'";
+			sqlQuery = "select * from products p inner join retailer r on p.RetailerId = r.RetailerId where p.Category = '" + categ + "'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			while(rs.next()){
 				if(!prodInfo.contains(rs.getString(1))){
-					
-					Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-					
+
+					Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
 					prodInfo.add(p);
 
 				}
@@ -331,12 +352,88 @@ public boolean deleteProduct(String Pid) {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-
-
 		return prodInfo;
-
-
-
 	}
 
+	public HashMap<String, Products> getCartProdFromDB(Cart cart){
+
+		HashMap<String, Products> cartMap = new HashMap<String, Products>();
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			System.out.println("userId" + cart.getUserId());
+			sqlQuery = "select * from products p inner join retailer r on p.RetailerId = r.RetailerId where p.pid in (select pid from cart where uid = '" + cart.getUserId() + "')";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+				cartMap.put(p.getPid(), p);
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return cartMap;
+	}
+
+	public void removeProductFromCart(String prodId, String userId){
+
+		try{
+
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "delete from cart where pid = '" + prodId + "' and uid = '" + userId + "';";
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public Products getProductFromId(String prodid){
+		
+		Products productObj = new Products();
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products p inner join retailer r on p.RetailerId = r.RetailerId where p.pid = '" + prodid + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
+				productObj.setDiscount(rs.getString("Discount"));
+				productObj.setPid(rs.getString("pid"));
+				productObj.setRetailerId(rs.getString("RetailerId"));
+				productObj.setRetailerName(rs.getString("RetailerName"));
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return productObj;
+	}
+	
+	public void addProductToCart(String prodId, String userId){
+		
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "insert into cart (pid, uid) values('"+ prodId + "', '" + userId + "');";
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
 }

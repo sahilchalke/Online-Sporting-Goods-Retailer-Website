@@ -85,16 +85,16 @@
 						<select name="productname" id="sel1">
 						<%
 						MySqlJDBC mysqlObj=new MySqlJDBC();
-						HashMap<String,Product> map =new HashMap<String,Product>();	
+						HashMap<String,Products> map =new HashMap<String,Products>();	
 					
 					 	map = mysqlObj.getProductList();
-					 	Product prod = new Product();
+					 	Products prod = new Products();
 					 	request.getSession().setAttribute("productList", map);
-					 	for (Map.Entry<String, Product> entry : map.entrySet()) {
+					 	for (Map.Entry<String, Products> entry : map.entrySet()) {
 					 		prod = entry.getValue();
-					 		System.out.println("Product: " + prod.getProductname());
+					 		System.out.println("Product: " + prod.getProductName());
 					 	 %>   
-					 		<option value="<%=prod.getPid()%>"><%=prod.getProductname()%></option>
+					 		<option value="<%=prod.getPid()%>"><%=prod.getProductName()%></option>
 					 		
 					 	<%
 					 	} 
