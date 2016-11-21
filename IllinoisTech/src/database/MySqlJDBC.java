@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
-import java.util.HashMap;
 
 import bean.Cart;
 import bean.Products;
@@ -386,6 +384,50 @@ public class MySqlJDBC implements DatabaseConstants {
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
 			sqlQuery = "delete from cart where pid = '" + prodId + "' and uid = '" + userId + "';";
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public Products getProductFromId(String prodid){
+		
+		Products productObj = new Products();
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products p inner join retailer r on p.RetailerId = r.RetailerId where p.pid = '" + prodid + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
+				productObj.setDiscount(rs.getString("Discount"));
+				productObj.setPid(rs.getString("pid"));
+				productObj.setRetailerId(rs.getString("RetailerId"));
+				productObj.setRetailerName(rs.getString("RetailerName"));
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return productObj;
+	}
+	
+	public void addProductToCart(String prodId, String userId){
+		
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "insert into cart (pid, uid) values('"+ prodId + "', '" + userId + "');";
 			int i = stmt.executeUpdate(sqlQuery);
 			//Close db connection.
 			stmt.close();

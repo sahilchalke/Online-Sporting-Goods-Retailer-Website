@@ -93,6 +93,7 @@
        	String discount = request.getParameter("discount");
        	String image = request.getParameter("productImage");
        	String retailer = request.getParameter("retailerName");
+       	String productId = request.getParameter("productId");
        %>
       <div id="container">
        <div class="tabbed">
@@ -104,19 +105,17 @@
        		  <li>
                  <div class="image"> <img src="<%= image %>" alt="" style="width: 150px; height: 150px;"/></div>
                  <br></br><p> Product Name: <span><%= productName %></span></p>
-                 <p> Retailer Name: <span><%= retailer %></span></p>        
+                 <p>Retailer Name: <span><%= retailer %></span></p>        
                  <p>Price: <span><%= price %></span></p>
                  <p> Discount: <span><%= discount %></span></p>
                  <br></br>
                  <center>
-                  <form class = 'submit-button' method = 'post' action = 'AddToCart.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=image %>' />
-			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'Add To Cart' style="width: 100px; height: 30px;"/>
-			        </form>
-			      </center>
+                  <form class = 'submit-button' method = 'post' action = 'ViewCart.jsp'>		           
+                  		<input type="hidden" name="productId" value="<%=productId%>"/>
+                  		<input type="hidden" name="action" value="addToCart"/>
+			            <input class = 'submit-button' type = 'submit'  value = 'AddToCart' style="width: 100px; height: 30px;"/>
+			      </form>
+			     </center>
                </li>
                </ul>
                   </div>

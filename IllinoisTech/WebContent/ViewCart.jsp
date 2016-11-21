@@ -13,12 +13,34 @@
 	Products prod = new Products();
 %>
 <%
-	//Delete item from cart.
+	
 	if(request.getParameter("action")!=null){
-		String prodId = request.getParameter("productID");
-		cartMap.remove(prodId);
-		request.getSession().setAttribute("userCart", cartMap);
-		mysql.removeProductFromCart(prodId, user.getUid());
+		//Delete item from cart.
+		if(request.getParameter("action").equals("delete")){
+			String prodId = request.getParameter("productID");
+			int index = 0;
+			for(String s : cart.getProductList()){
+				if(prodId.equals(s)){
+					break;
+				}
+				index++;
+			}
+			cart.getProductList().remove(index);
+			request.getSession().setAttribute("userCart", cart);
+			cartMap.remove(prodId);
+			mysql.removeProductFromCart(prodId, user.getUid());
+		}
+		//Add item to cart.
+		else if(request.getParameter("action").equals("addToCart")){
+			String prodId = request.getParameter("productId");
+			cart.getProductList().add(prodId);
+			cartMap.put(prodId, mysql.getProductFromId(prodId));
+			request.getSession().setAttribute("userCart", cart);
+			mysql.addProductToCart(prodId, user.getUid());
+		}
+		else{
+			System.out.println("No action");	
+		}
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -45,11 +67,11 @@
 					</h1>
 					<div id="navigation">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Support</a></li>
-							<li><a href="Login.jsp">Login</a></li>
-							<li><a href="Signup.html">Sign Up</a></li>
-							<li><a href="#">Contact</a></li>
+							<li><a href="UserHome.jsp">Home</a></li>
+          					<li><a href="#">Support</a></li>
+          					<li><a href="#">My Orders</a></li>
+          					<li><a href="#">Contact</a></li>
+          					<li><a href="index.jsp?value=logout">Logout</a></li>
 						</ul>
 					</div>
 				</div>
@@ -60,10 +82,6 @@
 						<ul>
 							<li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
 							<li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>
-							<!--<li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>-->
 						</ul>
 					</div>
 					<div id="slider-nav">
@@ -87,7 +105,7 @@
 						</form>
 					</div>
 					<div class="right">
-						<span class="cart"> <a href="#" class="cart-ico">&nbsp;</a>
+						<span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a>
 							<strong>$0.00</strong>
 						</span> <span class="left more-links"> <a href="#">Checkout</a></span>
 					</div>
@@ -110,6 +128,15 @@
 							<div class="items">
 									<div class="cl">&nbsp;</div>
 									<ul>
+									<%
+										if (cartMap.size()==0){
+									%>
+									<li>
+										<p>No products in cart.</p>
+									</li>
+									<%
+										}
+									%>
               <% 
               for(Map.Entry<String, Products> m : cartMap.entrySet()) {
 					prod = m.getValue();
