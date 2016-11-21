@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+<%@page import="com.mongodb.DBCollection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
@@ -136,6 +136,8 @@
           String searchField = "productName";
           String searchParameter = request.getParameter("productName");
           MongoDbUtil.getConnection();
+        //  MongoDbUtil.myReviews = MongoDbUtil.db.getCollection("myReviews");
+        		 
           BasicDBObject searchQuery = new BasicDBObject();
           searchQuery.put(searchField, searchParameter);
 
@@ -173,8 +175,10 @@
 				<br><br><hr>
 				
 				<table class='specialtable'>
-				<% BasicDBObject obj = (BasicDBObject) cursor.next(); %>				
-
+				<% BasicDBObject obj = (BasicDBObject) cursor.next(); 				
+				
+						%>
+						<% String id = obj.getString("_id"); %>
 				<tr>
 				<td> Product Name: </td>
 				<% pName = obj.getString("productName"); %>
@@ -216,8 +220,14 @@
 				</tr>
 				</table>
 				<br><br>
+				 <form class = 'submit-button' method = 'post' action = 'Comments.jsp'  >
+			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
+			             <input type='hidden' name = 'id' value = '<%=id %>' />			           
+			            <input class = 'submit-button' type = 'submit'  value = 'Write Comment' style="width: 100px; height: 30px;"/>
+			        </form>
 				</li>
                   </ul>
+                 
 			<% 
 			}
 		}	
