@@ -105,9 +105,9 @@
        		  <li>
                  <div class="image"> <img src="<%= image %>" alt="" style="width: 150px; height: 150px;"/></div>
                  <br></br><p> Product Name: <span><%= productName %></span></p>
-                 <p>Retailer Name: <span><%= retailer %></span></p>        
+                 <p>Retailer Name: <span><%= retailer%></span></p>        
                  <p>Price: <span><%= price %></span></p>
-                 <p> Discount: <span><%= discount %></span></p>
+                 <p> Discount: <span><%= discount%></span></p>
                  <br></br>
                  <center>
                   <form class = 'submit-button' method = 'post' action = 'ViewCart.jsp'>		           
