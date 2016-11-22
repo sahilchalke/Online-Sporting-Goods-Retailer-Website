@@ -73,10 +73,13 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px;">
+      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px; width: 150px:">
       	<p>Hello, <%=user.getUsername() %></p>
       </div>
-      <div class="right"> <span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
+      <div class="right" style="float: left; margin-left:30px"> 
+      	<span class="cart"><a href="ViewCart.jsp" class="cart-ico">&nbsp;</a><strong>$0.00</strong></span> 
+      	<span class="left more-links"> <a href="UserHome.jsp">Products</a></span>
+      </div>
     </div>
     
     <!-- End Search, etc -->
