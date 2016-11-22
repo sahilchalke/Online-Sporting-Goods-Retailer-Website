@@ -16,8 +16,9 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
+<script src="js/Ajax.js" type="text/javascript"></script>
 </head>
-<body>
+<body onload="init()">
 <div id="body">
 <!-- Top -->
 <div id="top">
@@ -59,15 +60,23 @@
   <div class="shell">
     <!-- Search, etc -->
     <div class="options">
-      <div class="search">
-        <form action="#" method="post">
-          <span class="field">
-          <input type="text" class="blink" value=" search here.." title="SEARCH" />
-          </span>
-          <input type="text" class="search-submit" value="GO" />
-        </form>
+    <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	 <p>Search IllinoisTech</p>
       </div>
-      <div class="right"> <span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
+      <div class="search">
+      		<div>
+      			<span class="field">	
+				<input type="text" class="blink" name="searchId" id="searchId" onkeyup="doCompletion()" value="  Search here.." autocomplete="on"/>
+				</span>
+				<input type="text" class="search-submit" value="GO" />
+			</div>	
+			<div id="autocompleteContainer" style="height: auto; float: top; margin-top: 25px;">
+					<table id="complete-table" 
+					style="position: absolute; border-collapse: collapse; background: white; font-size: 14px; width: 195px;">
+					</table>
+			</div>	
+	  </div>
+      <div class="right"> <span class="cart"> <a href="Login.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span></div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->

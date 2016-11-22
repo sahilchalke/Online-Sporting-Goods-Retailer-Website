@@ -248,7 +248,7 @@ public class MySqlJDBC implements DatabaseConstants {
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
-			sqlQuery = "select * from Products";
+			sqlQuery = "select * from Products p inner join retailer r on p.RetailerId = r.RetailerId";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 
 
@@ -257,6 +257,7 @@ public class MySqlJDBC implements DatabaseConstants {
 				productObj = new Products();
 				productObj.setPid(rs.getString("Pid"));
 				productObj.setRetailerId(rs.getString("RetailerId"));
+				productObj.setRetailerName(rs.getString("RetailerName"));
 				productObj.setCategory(rs.getString("Category"));
 				productObj.setProductName(rs.getString("ProductName"));
 				productObj.setImagePath(rs.getString("ImagePath"));
