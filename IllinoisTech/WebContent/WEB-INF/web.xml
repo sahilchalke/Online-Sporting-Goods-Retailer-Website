@@ -39,4 +39,12 @@
     <servlet-name>AutocompleteServlet</servlet-name>
     <url-pattern>/AutocompleteServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>DealMatchServlet</servlet-name>
+    <servlet-class>utility.DealMatchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DealMatchServlet</servlet-name>
+    <url-pattern>/DealMatchServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="bean.Cart, bean.User, database.MySqlJDBC, bean.Products, java.util.ArrayList" %>
+    <%@ page import="bean.Cart, bean.User, database.MySqlJDBC, bean.Products, java.util.Map,java.util.HashMap, java.util.ArrayList, utility.DealMatchServlet" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -115,6 +115,7 @@
           <li><a href="#"><span>Soccer</span></a></li>
           <li><a href="#"><span>Football</span></a></li>
           <li><a href="#"><span>Other</span></a></li>
+          <li><a href="#"><span>Deal Match</span></a></li>
         </ul>
       </div>
       <!-- Tabs -->
@@ -283,6 +284,65 @@
             </div>
           </div>
           <!-- End 5th -->
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+              <%
+                DealMatchServlet dealMatch = new DealMatchServlet();
+                dealMatch.doGet(request, response);
+                Products prod = new Products();
+                HashMap<String, Products> productsToDisplay = new HashMap<String, Products>();
+                String tweetsToDisplay = (String)request.getSession().getAttribute("tweets");
+                productsToDisplay = (HashMap<String, Products>)request.getSession().getAttribute("products");
+              %>
+					<h2>Welcome to IllinoisTech Sporting Goods - Start saving now.</h2>
+					<p>We offer the best and genuine products in the market at the
+				        cheapest price possible.</p><br></br>
+				   <div style='background-color: #E6E7E9; width:73%'>
+					<div style='margin-left:20px; padding-top: 15px;'>
+					    <h2>We beat our competitors in all aspects. Price-Match Gauranteed.</h2>
+					    <p><%=tweetsToDisplay%></p>
+				    </div>
+				   </div><br></br>
+		
+				<div style='background-color: #E6E7E9; width:73%'>
+				<div style='margin-left:20px; padding-top: 15px; padding-bottom: 15px'>
+					<h2>Deal Matches:</h2><br></br>
+					<table id="table" style='width:80%'>
+					<% for (Map.Entry<String, Products> m : productsToDisplay.entrySet()) {
+						prod = m.getValue();
+						%>
+						<tr>
+								<td><img class="header-image" src="images/<%=prod.getImagePath()%>" width="300" height="200" alt="Buildings" />
+								</td>
+								<td>
+								<h5 style="text-decoration: underline; color: blue;">
+								<%=prod.getRetailerName() + " "%><%=prod.getProductName()%>
+								</h5>
+								<h5>
+								Price: $<%=prod.getPrce()%>
+								</h5>
+								<h5>Discount:<%= prod.getDiscount()%>
+						        </h5>
+								<form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
+			                   		<input type='hidden' name = 'productId' value = '<%=prod.getPid()%>'/>
+						            <input type='hidden' name = 'productName' value = '<%=prod.getProductName() %>' />
+						            <input type='hidden' name = 'retailerName' value = '<%=prod.getRetailerName()%>' />
+						            <input type='hidden' name = 'productPrice' value = '<%=prod.getPrce() %>' />
+						            <input type='hidden' name = 'productImage' value = '<%=prod.getImagePath() %>' />
+						            <input type='hidden' name = 'discount' value = '<%=prod.getDiscount() %>' /><br>			           
+						            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
+			        			</form>
+								</td>
+								</tr>
+					<%} %>
+			   </table>
+			    </div>
+			    </div>
+              <div class="cl">&nbsp;</div>
+            </div>
+          </div>
+          <!-- End Deal Match -->
         </div>
         <!-- Brands -->
         <div class="brands">
