@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ page import="java.util.*,bean.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,6 +13,9 @@
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
 </head>
+<%
+User user = (User)session.getAttribute("userData");
+%>
 <body>
 	<div id="body">
 		<!-- Top -->
@@ -79,8 +83,9 @@
 						<div id="login_container">
 							
 								<div align="center">
-									<h2>Retailer Home</h2>
+									<h2><%=user.getRole()%> Home</h2>
 								</div>
+								<%if(user.getRole().equalsIgnoreCase("retailer")){%>
 								<form action='RetailerView.jsp' method="get">
 								<button type="submit">View Product</button>
 								</form>
@@ -89,6 +94,25 @@
 								<button type="submit">Add Product</button>
 								</form>
 								<br>
+								<form action='UpdateDeleteProducts.jsp' method="POST">
+								<button type="submit">Update/Delete Products</button>
+								</form>
+								<%}%>
+								<%if(user.getRole().equalsIgnoreCase("manager")){%>
+								<form action='RetailerAdd.jsp' method="POST">
+								<button type="submit">Add Product</button>
+								</form>
+								<br>
+								<form action='UpdateDeleteProducts.jsp' method="POST">
+								<button type="submit">Update/Delete Products</button>
+								</form>
+								<br>
+								<form action='RetailerApprove.jsp' method="POST">
+								<button type="submit">Retailer Approve</button>
+								</form>
+								<br>
+								<%}%>
+								
 							
 							
 						</div>

@@ -11,6 +11,7 @@ import java.util.*;
 
 import bean.Cart;
 import bean.Products;
+import bean.Retailer;
 import bean.User;
 
 public class MySqlJDBC implements DatabaseConstants {
@@ -148,7 +149,9 @@ public class MySqlJDBC implements DatabaseConstants {
 
 	public void insertProduct(String category, String pid, String rid, String pName, String iPath, String price,String discount,String active) {
 
-
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("ddMMyyHHmmSS");
+		pid = format.format(date);
 
 		try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -181,7 +184,7 @@ public class MySqlJDBC implements DatabaseConstants {
 				user.setEmail(email);
 				user.setPhonenumber(rs.getString("PhoneNumber"));
 				user.setUsername(rs.getString("UserName"));
-				user.setRole("customer");
+				user.setRole(rs.getString("Type"));
 			}
 			//Close db connection.
 			stmt.close();
@@ -437,4 +440,85 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
+
+	//Getting Retailer Data
+	public Retailer getRetailerData(String email){
+
+		Retailer retailer = new Retailer();
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from retailer where Email = '" + email + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				retailer.setRid(rs.getString("RetailerId"));
+				retailer.setRetailerName(rs.getString("RetailerName"));
+				retailer.setEmail(rs.getString("Email"));
+				retailer.setFlag(rs.getString("Flag"));
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return retailer;
+	}
+	
+	//Getting all Retailer 
+	
+		public boolean changeRetailerAuth (String rid,String flag){
+			
+		
+			try{
+				conn = DriverManager.getConnection(DB_URL,USER,PASS);
+				stmt = conn.createStatement();
+				sqlQuery = "update retailer set Flag = '"+flag+"' where RetailerId = '"+rid+"'";
+				int rs = stmt.executeUpdate(sqlQuery);
+				
+				//Close db connection.
+				stmt.close();
+				conn.close();
+				if(rs==0){
+					return false;
+				}
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			return true;
+			
+		}
+
+		//change retailer status 
+				public ArrayList<Retailer> getAllRetailerData(){
+					ArrayList<Retailer> retailerList = new ArrayList<Retailer>();
+					
+
+					try{
+						conn = DriverManager.getConnection(DB_URL,USER,PASS);
+						stmt = conn.createStatement();
+						sqlQuery = "select * from retailer";
+						ResultSet rs = stmt.executeQuery(sqlQuery);
+
+						while(rs.next()){
+							Retailer retailer = new Retailer();
+							retailer.setRid(rs.getString("RetailerId"));
+							retailer.setRetailerName(rs.getString("RetailerName"));
+							retailer.setEmail(rs.getString("Email"));
+							retailer.setFlag(rs.getString("Flag"));
+							retailerList.add(retailer);
+						}
+						//Close db connection.
+						stmt.close();
+						conn.close();
+					}catch(SQLException e){
+						e.printStackTrace();
+					}
+					return retailerList;
+				}
+
+
 }

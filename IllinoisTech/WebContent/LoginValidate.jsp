@@ -1,3 +1,4 @@
+<%@page import="bean.Retailer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page
@@ -14,6 +15,7 @@
 		String pass = request.getParameter("psw");
 		User user = new User();
 		Cart cart = new Cart();
+		Retailer retailer = new Retailer();
 		ValidateLogin validate = new ValidateLogin(email, pass);
 		if (validate.validateUser()) {
 			MySqlJDBC mysql = new MySqlJDBC();
@@ -26,6 +28,20 @@
 					request.getSession().setAttribute("userCart", cart);
 					request.getSession().setAttribute("userProf", "complete");
 					response.sendRedirect("UserHome.jsp");
+				}
+				if (user.getRole().equalsIgnoreCase("manager")||user.getRole().equalsIgnoreCase("retailer")) {
+					System.out.println("Logged in.");
+					cart = mysql.getUserCart(user.getUid());
+					request.getSession().setAttribute("userCart", cart);
+					request.getSession().setAttribute("userProf", "complete");
+					
+					//Creating retailer session
+					retailer = mysql.getRetailerData(email);
+					if(retailer.getFlag().equals("0")){
+						response.sendRedirect("RetailerStatus.jsp?status="+retailer.getFlag());
+					}
+					session.setAttribute("retailer", retailer);
+					response.sendRedirect("RetailerHome.jsp");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

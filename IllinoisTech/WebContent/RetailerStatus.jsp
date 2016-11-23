@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
-<%@page import="bean.*"%>
+	<%@ page import="bean.*, database.MySqlJDBC, bean.Cart" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,12 +12,19 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
+<style>
+#login_container form input, #login_container form select, #login_container form textarea {
+	padding: 5px;
+	color: #333333;
+	border: 1px solid #ddd;
+	border-right:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	background-color:#fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+</style>
 </head>
-<%
-Retailer retailer = (Retailer) session.getAttribute("retailer");
-User user = (User)session.getAttribute("userData");
-String message = request.getParameter("message");
-%>
 <body>
 	<div id="body">
 		<!-- Top -->
@@ -83,62 +88,23 @@ String message = request.getParameter("message");
 				<!-- Content -->
 				<div id="content">
 					<!--Login Container -->
-					
 					<div id="container">
-					<%if(message!=null){ %>
-									<h2 style="color: red"><%=message%></h2>
-									<%}%>
 						<div id="login_container">
-							<form action='AddProductsDB.jsp' method="POST">
-								<div align="center">
-									
-									<h2>Retailer Product To Added</h2>
-								</div>
-								<label><b>Category:</b></label><br>
-								<br>
-								<div class="form-group">
-									<label for="sel1">Select list:</label> <select
-										name="category" id="sel1">
-										<option value=Baseball>Baseball</option>
-										<option value=Basketball>Basketball</option>
-										<option value=Soccer>Soccer</option>
-										<option value=Football>Football</option>
-										<option value=Other>Other</option>
-									</select>
-								</div>
-								<br>
-
-							<!-- 	<label><b>ProductId:</b></label><br> <input type="text"
-									placeholder="Enter PID" name="pid" id="pid" required><br> -->
-
-								<!-- <label><b>RetailerId:</b></label><br> 
-								 -->
-								 <input type="hidden"
-									placeholder="Enter RID" name="rid" id="rid"  value="<%= retailer.getRid()%>"><br>
-
-
-								<label><b>ProductName:</b></label><br> <input type="text"
-									placeholder="Enter PName" name="pName" id="pName" required><br>
-
-								<label><b>Image:</b></label><br> <input  type="file"
-									placeholder="Enter IPath" name="iPath" id="iPath" required><br>
-
-								<label><b>Price:</b></label><br> <input type="text"
-									placeholder="Enter Price" name="price" id="price" required><br>
-
-
-
-								<label><b>Discount:</b></label><br> <input type="text"
-									placeholder="Enter Discount" name="discount" id="discount"
-									required><br> 
-									
-									<label><b>Active:</b></label><br>
-								<input type="text" value="1" name="active" id="active" required><br>
-
-								<button type="submit">Add</button>
+							<%
+		
+							
+							String status = request.getParameter("status");
+							if(status.equals("0")){%>
+							<h4>Retailer Authorization Pending</h4>
+							<%} 
+							else if(status.equals("2")){%>
+							<h4> Retailer Authorization Revoked</h4>
 								
-								<br>
-							</form>
+							<% }%>					
+							
+
+
+
 							
 						</div>
 						<!-- Brands -->

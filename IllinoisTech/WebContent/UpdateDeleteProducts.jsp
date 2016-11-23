@@ -13,7 +13,7 @@
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
 </head>
-
+<%String message = request.getParameter("message"); %>
 <body>
 	<div id="body">
 		<!-- Top -->
@@ -78,6 +78,9 @@
 				<div id="content">
 					<!--Login Container -->
 					<div id="container">
+					<%if(message!=null){ %>
+									<h2 style="color: red"><%=message%></h2>
+									<%}%>
 						<div id="login_container">
 						
 						<h2>Update and Delete Products</h2>
