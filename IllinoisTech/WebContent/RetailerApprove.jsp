@@ -20,17 +20,13 @@ if(request.getParameter("action")!=null){
 	String action = request.getParameter("action");
 	String rid = request.getParameter("rid");
 	boolean status= false;
-	switch(action) {
-	   case "Approve" :
+	if(action.equals("Approve")){
 		   status = mysql.changeRetailerAuth(rid, "1");
-	      break; 
-	   
-	   case "Reject":
-	   	status = mysql.changeRetailerAuth(rid, "2");
-	      break; 
-	   default : 
-
 	}
+	if(action.equals("Reject")){
+	   	status = mysql.changeRetailerAuth(rid, "2");
+	}
+	 
 }
 
 ArrayList<Retailer> retailerList = mysql.getAllRetailerData();
