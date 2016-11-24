@@ -17,7 +17,9 @@
 	if(request.getParameter("action")!=null){
 		//Delete item from cart.
 		if(request.getParameter("action").equals("delete")){
-			String prodId = request.getParameter("productID");
+			System.out.println("In delete");
+			String prodId = request.getParameter("productId");
+			System.out.println(prodId);
 			int index = 0;
 			for(String s : cart.getProductList()){
 				if(prodId.equals(s)){
@@ -107,7 +109,7 @@
 					<div class="right">
 						<span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a>
 							<strong>$0.00</strong>
-						</span> <span class="left more-links"> <a href="#">Checkout</a></span>
+					<!-- 	</span> <span class="left more-links"> <a href="Checkout.jsp">Checkout</a></span> -->
 					</div>
 				</div>
 				<!-- End Search, etc -->
@@ -127,16 +129,21 @@
 							<div class="tab-content" style="display: block;">
 							<div class="items">
 									<div class="cl">&nbsp;</div>
-									<ul>
+									<form action='Checkout.jsp' >
+									
 									<%
 										if (cartMap.size()==0){
 									%>
+									<ul>
 									<li>
 										<p>No products in cart.</p>
 									</li>
+									</ul>
 									<%
 										}
 									%>
+				<ul>					
+			
               <% 
               for(Map.Entry<String, Products> m : cartMap.entrySet()) {
 					prod = m.getValue();
@@ -154,26 +161,33 @@
 						<option value="no">No</option>
 				  </select>
 				  <p><label>Quantity: </label> 
-						<select name="<%= prod.getPid()%>">
+						<select name="Quantity<%= prod.getPid()%>">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
 						</select></p><br></br>
-						<form action='ViewCart.jsp' >
-							<input class = 'submit-button' type = 'submit'  value = 'Delete' style="margin-left: 20px; width: 100px; height: 30px;"/>
-							<input type="hidden" name="productID" value="<%= prod.getPid()%>"/>
-							<input type="hidden" name="action" value="delete"/>
-						</form>
+						<a href="ViewCart.jsp?action=delete&productId=<%= prod.getPid()%>" class="button">Delete</a>
+						
                 </li>
                  <%} %>
-              </ul>
+                 </ul>
+                 <input class = 'submit-button' type = 'submit'  value = 'Checkout' style="margin-left: 20px; width: 100px; height: 30px;"/>
+							<input type="hidden" name="productID" value="<%= prod.getPid()%>"/>
+							
+							<input type="hidden" name="action" value="checkout"/>
+                 </form>
+              
+              
               <div class="cl">&nbsp;</div>
             </div>
           </div>
           <!-- End 5th -->
+        
+							
         </div>
+        
 						<!-- Brands -->
 						<div class="brands">
 							<h3>Brands</h3>

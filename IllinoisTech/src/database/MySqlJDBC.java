@@ -33,7 +33,7 @@ public class MySqlJDBC implements DatabaseConstants {
 		DateFormat format = new SimpleDateFormat("ddMMyyHHmmSS"); 
 		String RetailerId = format.format(date);
 		String flag="0";
-    	System.out.println(username + email + RetailerId + flag);
+		System.out.println(username + email + RetailerId + flag);
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
@@ -42,8 +42,8 @@ public class MySqlJDBC implements DatabaseConstants {
 			System.out.println( insertRetailer);
 
 			int i = stmt.executeUpdate(insertRetailer);
-			
-						
+
+
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -392,9 +392,9 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Products getProductFromId(String prodid){
-		
+
 		Products productObj = new Products();
 
 		try{
@@ -421,9 +421,9 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return productObj;
 	}
-	
+
 	public void addProductToCart(String prodId, String userId){
-		
+
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
@@ -436,4 +436,96 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
+
+	public void addCreditCart(String uid, String ccnumber, String name, String cvv, String exp, String billadd){
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "insert into cart (UID, CreditCardNumber, NameOnCard, CVV, ExpiryDate, BillingAddress)"
+					+ "values('"+ uid + "', '" + ccnumber + ", "+ name +", " + cvv +", " + exp + ", " + billadd + "');";
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void addOrders(String oid, String pid, String quantity, String warranty, String price){
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "insert into orders (oid, pid, quantity, warranty, price)"
+					+ "values('"+ oid + "', '" + pid + "', '"+ quantity +"', '" + warranty +"', '" + price + "');";
+			System.out.println(sqlQuery);
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertInvoice(String oid,String uid,  String cc, String total, String delDate, String purDate, String shipAdd){
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "insert into invoice (OID, UID, CC, Total, DeliveryDate, PurchaseDate, ShippingAddress)"
+					+ "values('"+ oid + "', '" + uid + "', '"+  cc + "', '" + total +"', '" + delDate +"', '" + purDate + "', '"+shipAdd+ "');";
+		//	System.out.println(sqlQuery);
+			int i = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public HashMap<String, Products> getProdFromDB(String oid){
+
+		HashMap<String, Products> prodMap = new HashMap<String, Products>();
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			//System.out.println("userId" + cart.getUserId());
+			sqlQuery = "select * from products p inner join orders o on p.PID=o.PID where p.PID in (Select pid from orders where oid = '"+oid+"')";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				//Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+				Products p =new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+				prodMap.put(p.getPid(), p);
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return prodMap;
+	}
+	
+	public void deleteOrder(String orderid){
+		
+		try{
+
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			
+			sqlQuery = "delete from orders where oid = '"+orderid+ "';";
+			int j = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+
 }
