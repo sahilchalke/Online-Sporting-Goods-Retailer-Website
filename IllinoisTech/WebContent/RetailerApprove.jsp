@@ -1,29 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
-	<%@page import="java.util.HashMap,bean.*,database.*"%>
+	<%@ page import="java.util.*,bean.*,database.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<%
-HashMap<String,Products> map = new HashMap<String,Products>();
-Products prodObj = new Products();
-
-MySqlJDBC mysqlObj=new MySqlJDBC();
-
-//Delete Functionality
-String mode = request.getParameter("active");
-String pp_id = request.getParameter("productname");
-boolean deleteStatus =false;
-if(mode!=null&&mode.equals("Delete"))
-{
-	
-	deleteStatus = mysqlObj.deleteProduct(pp_id);
-	if(deleteStatus){
-		response.sendRedirect("UpdateDeleteProducts.jsp?message=Product deleted successfully");
-	}
-}		
-%>
-
 <head>
 <title>IllinoisTech Sporting Goods</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -34,6 +13,24 @@ if(mode!=null&&mode.equals("Delete"))
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
 </head>
+<%
+User user = (User)session.getAttribute("userData");
+MySqlJDBC mysql = new MySqlJDBC();
+if(request.getParameter("action")!=null){
+	String action = request.getParameter("action");
+	String rid = request.getParameter("rid");
+	boolean status= false;
+	if(action.equals("Approve")){
+		   status = mysql.changeRetailerAuth(rid, "1");
+	}
+	if(action.equals("Reject")){
+	   	status = mysql.changeRetailerAuth(rid, "2");
+	}
+	 
+}
+
+ArrayList<Retailer> retailerList = mysql.getAllRetailerData();
+%>
 <body>
 	<div id="body">
 		<!-- Top -->
@@ -99,59 +96,40 @@ if(mode!=null&&mode.equals("Delete"))
 					<!--Login Container -->
 					<div id="container">
 						<div id="login_container">
-						
-						<%
-					String name=request.getParameter("productname");
-						if(session.getAttribute("productList")!=null){
-							map = (HashMap<String,Products>)session.getAttribute("productList");
-							prodObj = map.get(name);
-						}
-						%>
-							<form action='UpdateProductsDB.jsp' method="POST">
 							
 								<div align="center">
-									<h2>Product To Updated</h2>
+									<h2>Approve Retailers</h2>
 								</div>
-								<label><b>Category:</b></label><br>
-								<br>
-								<div class="form-group">
-						<label for="sel1">Select list:</label> <select
-						name="category" id="sel1"> 
-						<option value='<%=prodObj.getCategory() %>'><%=prodObj.getCategory() %></option>
-										
-									</select>
-								</div>
-								<br>
-
-								<label><b>ProductId:</b></label><br> <input type="text"
-									 name="pid" value='<%=prodObj.getPid() %>' id="pid" required><br>
-
-								<label><b>RetailerId:</b></label><br> <input type="text"
-									 name="rid" value='<%=prodObj.getRetailerId() %>'  id="rid" required><br>
-
-
-		<label><b>ProductName:</b></label><br> <input type="text"
-		 name="pName" value='<%=prodObj.getProductName()%>' id="pName" required><br>
-
-		<label><b>Image:</b></label><br> <input type="text"
-		name="iPath" value=<%=prodObj.getImagePath()%> id="iPath" required><br>
-
-		<label><b>Price:</b></label><br> <input type="text"
-		name="price" value=<%=prodObj.getPrce() %> id="price" required><br>
-
-
-
-	<label><b>Discount:</b></label><br> <input type="text" name="discount" 
-	value = '<%=prodObj.getDiscount()%>' id="discount" required><br> 
-									
-	<label><b>Active:</b></label><br>
-	<input type="text" value='<%=prodObj.getActive() %>' name="active" id="active" required><br>
-
-								<button type="submit">Update</button>
-								
-								<br>
-							</form>
+							<%for(Retailer dispRetailer:retailerList){%>
+							<form action='RetailerApprove.jsp' method="GET">
 							
+							<%if(dispRetailer.getFlag().equals("0")){%>
+							<h4><%=dispRetailer.getRetailerName()%></h4>
+							<input type="submit" name="action" value="Pending"  disabled/>
+							<input type="submit" name="action" value="Approve"/>
+							<input type="submit" name="action" value="Reject"/>
+							<input type = "hidden" name= "rid" value="<%=dispRetailer.getRid()%>"/>
+							<br>
+							<%}%>
+							
+							<%if(dispRetailer.getFlag().equals("1")&&!user.getEmail().equalsIgnoreCase(dispRetailer.getEmail())){%>
+							<h4><%=dispRetailer.getRetailerName()%></h4>
+							<input type="submit" name="action" value="Approve" style="background-color: #4CAF50;" disabled/>
+							<input type="submit" name="action" value="Reject"/>
+							<input type = "hidden" name= "rid" value="<%=dispRetailer.getRid()%>"/>
+							<br>
+							<%}%>
+							
+							<%if(dispRetailer.getFlag().equals("2")){%>
+							<h4><%=dispRetailer.getRetailerName()%></h4>
+							<input type="submit" name="action" value="Approve"/>
+							<input type="submit" name="action" value="Reject" disabled/>
+							<input type = "hidden" name= "rid" value="<%=dispRetailer.getRid()%>"/>
+							<br>
+							<%}%>
+							
+							</form>
+							<%}%>
 						</div>
 						<!-- Brands -->
 						<div class="brands">

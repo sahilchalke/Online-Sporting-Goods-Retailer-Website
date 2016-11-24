@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
-<%@page import="bean.Products"%>
+<%@page import="bean.Products, utility.DealMatchServlet"%>
 <%@page import="database.MySqlJDBC"%>  
 <%  MySqlJDBC mysql = new MySqlJDBC(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,8 +16,9 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
+<script src="js/Ajax.js" type="text/javascript"></script>
 </head>
-<body>
+<body onload="init()">
 <div id="body">
 <!-- Top -->
 <div id="top">
@@ -59,15 +60,23 @@
   <div class="shell">
     <!-- Search, etc -->
     <div class="options">
-      <div class="search">
-        <form action="#" method="post">
-          <span class="field">
-          <input type="text" class="blink" value=" search here.." title="SEARCH" />
-          </span>
-          <input type="text" class="search-submit" value="GO" />
-        </form>
+    <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	 <p>Search IllinoisTech</p>
       </div>
-      <div class="right"> <span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span></div>
+      <div class="search">
+      		<div>
+      			<span class="field">	
+				<input type="text" class="blink" name="searchId" id="searchId" onkeyup="doCompletion()" value="  Search here.." autocomplete="on"/>
+				</span>
+				<input type="text" class="search-submit" value="GO" />
+			</div>	
+			<div id="autocompleteContainer" style="height: auto; float: top; margin-top: 25px;">
+					<table id="complete-table" 
+					style="position: absolute; border-collapse: collapse; background: white; font-size: 14px; width: 195px;">
+					</table>
+			</div>	
+	  </div>
+      <div class="right"> <span class="cart"> <a href="Login.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span></div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
@@ -80,6 +89,7 @@
           <li><a href="#"><span>Soccer</span></a></li>
           <li><a href="#"><span>Football</span></a></li>
           <li><a href="#"><span>Other</span></a></li>
+          <li><a href="#"><span>Deal Match</span></a></li>
         </ul>
       </div>
       <!-- Tabs -->
@@ -248,6 +258,65 @@
             </div>
           </div>
           <!-- End 5th -->
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+              <%
+                DealMatchServlet dealMatch = new DealMatchServlet();
+                dealMatch.doGet(request, response);
+                Products prod = new Products();
+                HashMap<String, Products> productsToDisplay = new HashMap<String, Products>();
+                String tweetsToDisplay = (String)request.getSession().getAttribute("tweets");
+                productsToDisplay = (HashMap<String, Products>)request.getSession().getAttribute("products");
+              %>
+					<h2>Welcome to IllinoisTech Sporting Goods - Start saving now.</h2>
+					<p>We offer the best and genuine products in the market at the
+				        cheapest price possible.</p><br></br>
+				   <div style='background-color: #E6E7E9; width:73%'>
+					<div style='margin-left:20px; padding-top: 15px;'>
+					    <h2>We beat our competitors in all aspects. Price-Match Gauranteed.</h2>
+					    <p><%=tweetsToDisplay%></p>
+				    </div>
+				   </div><br></br>
+		
+				<div style='background-color: #E6E7E9; width:73%'>
+				<div style='margin-left:20px; padding-top: 15px; padding-bottom: 15px'>
+					<h2>Deal Matches:</h2><br></br>
+					<table id="table" style='width:80%'>
+					<% for (Map.Entry<String, Products> m : productsToDisplay.entrySet()) {
+						prod = m.getValue();
+						%>
+						<tr>
+								<td><img class="header-image" src="images/<%=prod.getImagePath()%>" width="300" height="200" alt="Buildings" />
+								</td>
+								<td>
+								<h5 style="text-decoration: underline; color: blue;">
+								<%=prod.getRetailerName() + " "%><%=prod.getProductName()%>
+								</h5>
+								<h5>
+								Price: $<%=prod.getPrce()%>
+								</h5>
+								<h5>Discount:<%= prod.getDiscount()%>
+						        </h5>
+								<form class = 'submit-button' method = 'post' action = 'ProductInfo.jsp'  >
+			                   		<input type='hidden' name = 'productId' value = '<%=prod.getPid()%>'/>
+						            <input type='hidden' name = 'productName' value = '<%=prod.getProductName() %>' />
+						            <input type='hidden' name = 'retailerName' value = '<%=prod.getRetailerName()%>' />
+						            <input type='hidden' name = 'productPrice' value = '<%=prod.getPrce() %>' />
+						            <input type='hidden' name = 'productImage' value = '<%=prod.getImagePath() %>' />
+						            <input type='hidden' name = 'discount' value = '<%=prod.getDiscount() %>' /><br>			           
+						            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
+			        			</form>
+								</td>
+								</tr>
+					<%} %>
+			   </table>
+			    </div>
+			    </div>
+              <div class="cl">&nbsp;</div>
+            </div>
+          </div>
+          <!-- End Deal Match -->
         </div>
         <!-- Brands -->
         <div class="brands">

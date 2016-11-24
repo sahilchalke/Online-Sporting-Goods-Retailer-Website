@@ -19,7 +19,7 @@
 	String discount = request.getParameter("discount");
 	String active = request.getParameter("active");
 	mysql.updateProducts(category, pid, rid, pName ,iPath, price, discount, active );
-	System.out.println("Successful");
+	response.sendRedirect("UpdateDeleteProducts.jsp?message=Product updated Successfully");
 	
 	
 	

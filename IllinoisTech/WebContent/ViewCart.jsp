@@ -99,6 +99,7 @@
 			<div class="shell">
 				<!-- Search, etc -->
 				<div class="options">
+
 					<div class="search">
 						<form action="#" method="post">
 							<span class="field"> <input type="text" class="blink"
@@ -112,6 +113,27 @@
 					<!-- 	</span> <span class="left more-links"> <a href="Checkout.jsp">Checkout</a></span> -->
 					</div>
 				</div>
+
+      <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	 <p>Search IllinoisTech</p>
+      </div>
+      <div class="search">
+        <form action="#" method="post">
+          <span class="field">
+          <input type="text" class="blink" value=" search here.." title="SEARCH" />
+          </span>
+          <input type="text" class="search-submit" value="GO" />
+        </form>
+      </div>
+      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px;">
+      	<p>Hello, <%=user.getUsername() %></p>
+      </div>
+      <div class="right" style="float: left; margin-left:30px"> 
+      	<span class="cart"><a href="ViewCart.jsp" class="cart-ico">&nbsp;</a><strong>$0.00</strong></span> 
+      	<span class="left more-links"> <a href="UserHome.jsp">Products</a></span>
+      </div>
+    </div>
+
 				<!-- End Search, etc -->
 				<!-- Content -->
 				<div id="content">

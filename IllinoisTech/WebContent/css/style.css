@@ -84,7 +84,7 @@ h1#logo a{ display:block; height:61px; text-indent: -4000px; background:url(imag
 
 #content { padding-top:20px; width: 1000px;}
 
-.tabs { height:36px; width: 700px; margin-left: 12%;}
+.tabs { height:36px; width: 800px; margin-left: 12%;}
 .tabs ul{ list-style-type: none; font-size:14px; text-transform: uppercase; font-weight: bold; }
 .tabs ul li{ float:left; display:inline; margin-right:1px; }
 .tabs ul li a,

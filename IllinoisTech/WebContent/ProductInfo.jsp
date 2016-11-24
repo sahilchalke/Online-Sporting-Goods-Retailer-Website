@@ -4,13 +4,16 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
-<%@page import="bean.Products"%>
+<%@page import="bean.Products, bean.User"%>
 <%@ page import="com.mongodb.DBCursor"%>
 <%@page import="database.MySqlJDBC"%>  
 
 <%@ page import="com.mongodb.BasicDBObject"%>
 <%@page import="database.MongoDbUtil"%>
-<%  MySqlJDBC mysql = new MySqlJDBC(); %>
+<%  
+	MySqlJDBC mysql = new MySqlJDBC(); 
+	User user = (User)request.getSession().getAttribute("userData");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -33,11 +36,19 @@
       <h1 id="logo"><a href="#">IllinoisTech Sporting Goods</a></h1>
       <div id="navigation">
         <ul>
-          <li><a href="#">Home</a></li>
+          <%if(user!=null) {%>	
+          <li><a href="UserHome.jsp">Home</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">My Orders</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="index.jsp?value=logout">Logout</a></li>
+          <%}else{ %>
+          <li><a href="index.jsp">Home</a></li>
           <li><a href="#">Support</a></li>
           <li><a href="Login.jsp">Login</a></li>
           <li><a href="Signup.html">Sign Up</a></li>
           <li><a href="#">Contact</a></li>
+          <%} %>
         </ul>
       </div>
     </div>
@@ -48,10 +59,6 @@
         <ul>
           <li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
           <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>
-          <!--<li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>-->
         </ul>
       </div>
       <div id="slider-nav"> <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a></div>
@@ -64,7 +71,10 @@
 <div id="main">
   <div class="shell">
     <!-- Search, etc -->
-    <div class="options">
+   <div class="options">
+      <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	 <p>Search IllinoisTech</p>
+      </div>
       <div class="search">
         <form action="#" method="post">
           <span class="field">
@@ -73,7 +83,15 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
+      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px;">
+      	<%if(user!=null){ %>
+      	<p>Hello, <%=user.getUsername() %></p>
+      	<%} %>
+      </div>
+      <div class="right" style="float: left; margin-left:30px"> 
+      	<span class="cart"><a href="ViewCart.jsp" class="cart-ico">&nbsp;</a><strong>$0.00</strong></span> 
+      	<span class="left more-links"> <a href="UserHome.jsp">Products</a></span>
+      </div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
@@ -94,12 +112,31 @@
       <!-- Tabs -->
       <!-- Container -->
        <%
-       	String productName = request.getParameter("productName");
-       	String price = request.getParameter("productPrice");
-       	String discount = request.getParameter("discount");
-       	String image = request.getParameter("productImage");
-       	String retailer = request.getParameter("retailerName");
-       	String productId = request.getParameter("productId");
+        String productName = "";
+      	String price = "";
+      	String discount = "";
+      	String image = "";
+      	String retailer = "";
+      	String productId = "";
+        if(request.getParameter("value")!=null){
+        	if(request.getParameter("value").equals("fromAjax")){
+        		Products prod = new Products();
+        		prod = (Products)request.getSession().getAttribute("Product");
+        		 productName = prod.getProductName();
+               	 price = prod.getPrce();
+               	 discount = prod.getDiscount();
+               	 image = prod.getImagePath();
+               	 retailer = prod.getRetailerName();
+               	 productId = prod.getPid();
+        	}
+        }else{
+	      	 productName = request.getParameter("productName");
+	      	 price = request.getParameter("productPrice");
+	      	 discount = request.getParameter("discount");
+	      	 image = request.getParameter("productImage");
+	      	 retailer = request.getParameter("retailerName");
+	      	 productId = request.getParameter("productId");
+        }
        %>
       <div id="container">
       

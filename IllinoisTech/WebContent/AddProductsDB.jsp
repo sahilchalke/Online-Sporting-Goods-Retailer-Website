@@ -19,7 +19,7 @@
 	String price = request.getParameter("price");
 	String discount = request.getParameter("discount");
 	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, "1");
-	System.out.println("Successful");
+	response.sendRedirect("RetailerAdd.jsp?message=Product Inserted Successfully");
 %>
 </body>
 </html>
