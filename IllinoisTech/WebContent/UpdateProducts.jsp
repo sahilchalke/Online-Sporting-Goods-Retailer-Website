@@ -19,7 +19,7 @@ if(mode!=null&&mode.equals("Delete"))
 	
 	deleteStatus = mysqlObj.deleteProduct(pp_id);
 	if(deleteStatus){
-		response.sendRedirect("UpdateDeleteProducts.jsp");
+		response.sendRedirect("UpdateDeleteProducts.jsp?message=Product deleted successfully");
 	}
 }		
 %>

@@ -1,4 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.io.*"%>
+<%@ page import="java.text.*"%>
+<%@page import="bean.Products, bean.Cart, bean.User"%>
+<%@page import="database.MySqlJDBC"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <title>IllinoisTech Sporting Goods</title>
@@ -24,7 +31,8 @@
 						<ul>
 							<li><a href="#">Home</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a href="Login.jsp">Login</a></li>
+							<li><a href="#">Login</a></li>
+							<li><a href="Signup.jsp">Sign Up</a></li>
 							<li><a href="#">Contact</a></li>
 						</ul>
 					</div>
@@ -66,48 +74,67 @@
 						</span> <span class="left more-links"> <a href="#">Checkout</a>
 					</div>
 				</div>
-				<div id="content">
-					<div id="container">
-						<div id="login_container">
-							<form method="post" action="Signup.jsp">
-								<div align="center">
-									<h2>Sign Up</h2>
-								</div>
+				    <div id="content">
+      <!--Login Container -->
+      <div id="container">
+      	<div id="login_container">
+      	
+					
+			<div id="login_container">
+			<% String sum = request.getParameter("sum"); 
+				String orderid = request.getParameter("orderid");
+			User user = (User)request.getSession().getAttribute("userData");
+			//System.out.println("user");
+			%>
+			<%
+			Date date = new Date();
 
-								<label><b>User Name:</b></label><br> 
-								<input type="text" placeholder="Enter your full name" name="username" id="username" required><br>
-								<label><b>Email:</b></label><br> 
-								<input type="text" placeholder="Enter email address" name="email" id="email" required><br>
-								<label><b>Phone number:</b></label><br> 
-								<input type="text" placeholder="Enter your phone number" name="phonenumber" id="phonenumber" required><br>
-								<label><b>Address:</b></label><br> 
-								<input type="text" placeholder="Enter your address" name="address" id="address" required><br>
-								<label><b>Password:</b></label><br> 
-								<input type="password" placeholder="Enter passwordr" name="password1" id="password1" required><br>
-								<label><b>Password:</b></label><br> 
-								<input type="password" placeholder="Re-enter password" name="password2" id="password2" required><br>								
-
-								<center>
-									<button type="submit" name="signup">Create Account</button>
-									<br>
-								</center>
-							</form>
-							<a href="RetailerSignup.html">SignUp as Retailer</a>
+			DateFormat format = new SimpleDateFormat("MM/dd/YYYY");
+			%>
+			<h2>Your Total Cost is  <%= sum %></h2>
+			<br>
+      		<form action='invoice.jsp' method="post">
+      			<div align="center">
+							<h2>Enter your shipping address</h2>
 						</div>
-					</div>
-					<br> <br>
-				</div>
-				<!-- Brands -->
-				<div class="brands">
-					<h3>Brands</h3>
-					<div class="logos">
-						<a href="#"><img src="css/images/logo1.gif" alt="" /></a> <a
-							href="#"><img src="css/images/logo2.gif" alt="" /></a> <a
-							href="#"><img src="css/images/logo3.gif" alt="" /></a> <a
-							href="#"><img src="css/images/logo4.gif" alt="" /></a> <a
-							href="#"><img src="css/images/logo5.gif" alt="" /></a>
-					</div>
-				</div>
+						<br><br>
+						<label><b>Shipping Address</b></label><br> 
+						<input type="text" placeholder="Enter Shipping number" name="shipAddress" id = "shipAddress" required><br>
+						<div align="center">
+							<h2>Enter Credit/Debit Card Details</h2>
+						</div>
+						
+						<br><br>
+						<label><b>Credit Card Number</b></label><br> 
+						<input type="text" placeholder="Enter CreditCard number" name="ccnumber" id = "ccnumber" required><br> 
+						
+						<label><b>CVV</b></label><br>
+						<input type="text" placeholder="Enter CVV" name="cvv" id = "cvv" required><br>
+						
+						<label><b>Name on Card</b></label><br>
+						<input type="text" placeholder="Name on Card" name="name" id = "name" required><br>
+						
+						<label><b>Expiry Date(MM/YY)</b></label><br>
+						<input type="text" placeholder="Expiry Date" name="expiry" id = "expiry" required><br>
+						
+						<!-- <label><b>Shipping Address</b></label><br>
+						<input type="text" placeholder="Billing Address" name="address" id = "address" required><br> -->
+						
+						<button type="submit">Purchase</button><br>
+						<input type="hidden" name="sum" value="<%=sum%>"/>
+						<input type="hidden" name="orderid" value="<%=orderid%>"/>
+					</form>
+					<label><b>Or</b></label><br>
+      	</div>
+		
+			
+					  	
+        <!-- Brands -->
+        <div class="brands">
+          <h3>Brands</h3>
+          <div class="logos"> <a href="#"><img src="css/images/logo1.gif" alt="" /></a> <a href="#"><img src="css/images/logo2.gif" alt="" /></a> <a href="#"><img src="css/images/logo3.gif" alt="" /></a> <a href="#"><img src="css/images/logo4.gif" alt="" /></a> <a href="#"><img src="css/images/logo5.gif" alt="" /></a> </div>
+        </div>
+        <!-- End Brands -->
 				<!-- End Brands -->
 				<!-- Footer -->
 				<div id="footer">
@@ -128,5 +155,7 @@
 		<!-- End Content -->
 	</div>
 	<!-- End Main -->
+	</div>
 </body>
 </html>
+		

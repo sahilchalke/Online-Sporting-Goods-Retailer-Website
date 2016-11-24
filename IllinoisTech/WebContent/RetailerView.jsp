@@ -1,7 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*"%>
+<%@ page import="bean.*"%>
+<%@ page import="java.io.*"%>
+<%@page import="bean.Products"%>
+<%@page import="database.MySqlJDBC"%>  
+<%  MySqlJDBC mysql = new MySqlJDBC(); 
+Retailer retailer = (Retailer)session.getAttribute("retailer");
+String rid = retailer.getRid();
+
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>IllinoisTech Sporting Goods</title>
+<title>IllinoisTech Sporting Goods..</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <!--[if lte IE 6]><style type="text/css" media="screen">.tabbed { height:420px; }</style><![endif]-->
@@ -60,7 +73,7 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
+      <div class="right"> <span class="cart"> <a href="ViewCart.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
@@ -68,170 +81,174 @@
       <!-- Tabs -->
       <div class="tabs">
         <ul>
-          <li><a href="#" class="active"><span>Retailer Products</span></a></li>
-		  
+          <li><a href="#" class="active"><span>Baseball</span></a></li>
+		  <li><a href="#" class="active"><span>Basketball</span></a></li>
+          <li><a href="#"><span>Soccer</span></a></li>
+          <li><a href="#"><span>Football</span></a></li>
+          <li><a href="#"><span>Other</span></a></li>
         </ul>
       </div>
       <!-- Tabs -->
       <!-- Container -->
+      <%
+      ArrayList<Products> baseball= new ArrayList<Products>();
+      baseball = mysql.selectRetailerProducts("Baseball",rid);
+      %>
       <div id="container">
         <div class="tabbed">
           <!-- First Tab Content -->
           <div class="tab-content" style="display:block;">
             <div class="items">
               <div class="cl">&nbsp;</div>
+              
               <ul>
+              <% 
+              	for(Products p : baseball){
+              %>
                 <li>
-                  <div class="image"> <a href="#"><img src="css/images/image1.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
+                  <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
+                  <br><p> Product Name : <span><%= p.getProductName() %></span> 
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>        
+                   <form class = 'submit-button' method = 'post' action = 'RetailerInfo.jsp'  >
+			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
+			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
+			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 45px; width: 100px; height: 30px;"/>
+			        </form>
                 </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image2.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image3.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image4.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image4.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image3.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
+              <%} %>
               </ul>
               <div class="cl">&nbsp;</div>
             </div>
           </div>
           <!-- End First Tab Content -->
           <!-- Second Tab Content -->
-          <div class="tab-content">
+          <%
+          ArrayList<Products> basketball= new ArrayList<Products>();
+          basketball = mysql.selectRetailerProducts("BasketBall",rid);
+          %>
+          <div class="tab-content" style="display:block;">
             <div class="items">
               <div class="cl">&nbsp;</div>
               <ul>
+              <% 
+              	for(Products p : basketball){
+              %>
+              
                 <li>
-                  <div class="image"> <a href="#"><img src="css/images/image2.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
+                  <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
+                  <br><p>Product Name : <span><%= p.getProductName() %></span> 
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>
+                   <form class = 'submit-button' method = 'post' action = 'RetailerInfo.jsp'  >
+			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
+			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
+			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
+			        </form>
                 </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image2.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image2.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image2.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image1.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image1.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
+              <%} %>
               </ul>
               <div class="cl">&nbsp;</div>
             </div>
           </div>
           <!-- End Second Tab Content -->
           <!-- Third Tab Content -->
-          <div class="tab-content">
+          <%
+          ArrayList<Products> soccer= new ArrayList<Products>();
+          soccer = mysql.selectRetailerProducts("Soccer",rid);
+          %>
+          <div class="tab-content" style="display:block;">
             <div class="items">
               <div class="cl">&nbsp;</div>
               <ul>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image3.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
+              <% 
+              	for(Products p : soccer){
+              %>
+              
+               <li>
+                  <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
+                  <br><p>Product Name : <span><%= p.getProductName() %></span><br/>   
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>      
+                   <form class = 'submit-button' method = 'post' action = 'RetailerInfo.jsp'  >
+			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
+			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
+			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
+			        </form>
                 </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image3.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image3.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image3.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image4.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
-                <li>
-                  <div class="image"> <a href="#"><img src="css/images/image4.jpg" alt="" /></a> </div>
-                  <p> Item Number: <span>125515</span><br />
-                    Size List : <span>8/8.5/9.5/10/11</span><br />
-                    Brand Name: <a href="#">Adidas Shoes</a> </p>
-                  <p class="price">Wholesale Price: <strong>53 USD</strong></p>
-                </li>
+              <%} %>
               </ul>
               <div class="cl">&nbsp;</div>
             </div>
           </div>
           <!-- End Third Tab Content -->
+          <%
+          ArrayList<Products> football= new ArrayList<Products>();
+          football = mysql.selectRetailerProducts("Football",rid);
+          %>
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+              <ul>
+              <% 
+              	for(Products p : football){
+              %>
+                <li>
+                  <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
+                  <br><p>Product Name : <span><%= p.getProductName() %></span><br/>      
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>   
+                   <form class = 'submit-button' method = 'post' action = 'RetailerInfo.jsp'  >
+			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
+			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
+			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
+			        </form>
+                </li>
+              <%} %>
+              </ul>
+              <div class="cl">&nbsp;</div>
+            </div>
+          </div>
+          <!-- End 4th -->
+          <%
+          ArrayList<Products> other= new ArrayList<Products>();
+          other = mysql.selectProducts("Other");
+          %>
+          <div class="tab-content" style="display:block;">
+            <div class="items">
+              <div class="cl">&nbsp;</div>
+              <ul>
+              <% 
+              	for(Products p : other){
+              %>
+              
+               <li>
+                  <div class="image"> <img src="<%=p.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/></div>
+                  <br></br><p>Product Name : <span><%= p.getProductName() %></span>  
+                  <br><p> Retailer Name : <span><%= p.getRetailerName()%></span>       
+                   <form class = 'submit-button' method = 'post' action = 'RetailerInfo.jsp'  >
+			            <input type='hidden' name = 'productName' value = '<%=p.getProductName() %>' />
+			            <input type='hidden' name = 'retailerName' value = '<%=p.getRetailerName()%>' />
+			            <input type='hidden' name = 'productPrice' value = '<%=p.getPrce() %>' />
+			            <input type='hidden' name = 'productImage' value = '<%=p.getImagePath() %>' />
+			            <input type='hidden' name = 'discount' value = '<%=p.getDiscount() %>' /><br>			           
+			            <input class = 'submit-button' type = 'submit'  value = 'More Details' style="margin-left: 20px; width: 100px; height: 30px;"/>
+			        </form>
+                </li>
+                 <%} %>
+              </ul>
+              <div class="cl">&nbsp;</div>
+            </div>
+          </div>
+          <!-- End 5th -->
         </div>
         <!-- Brands -->
         <div class="brands">
