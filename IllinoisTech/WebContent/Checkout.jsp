@@ -113,6 +113,7 @@
 					 String warranty = request.getParameter("Warranty"+prod.getPid());
 					 String price = prod.getPrce();
 					 String discount = prod.getDiscount();
+					 System.out.println(prod.getPrce());
 					 o1 = new Orders(Integer.toString(Result),prod.getPid(),quantity, warranty, prod.getPrce());
 					 productInOrder.put(prod.getPid(), o1);
 					 

@@ -285,6 +285,48 @@ public class MySqlJDBC implements DatabaseConstants {
 		return map;
 	}
 
+	public HashMap<String,Products> getRetailerProductList(String rid){
+
+		HashMap<String,Products> map =new HashMap<String,Products>();
+		Products productObj;
+        String temp= "2311161613492";
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from Products p inner join retailer r on p.RetailerId = r.RetailerId  AND r.RetailerId = '" + rid + " ' ";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+
+			while(rs.next()){
+				System.out.println(rs.getString("ProductName"));
+				productObj = new Products();
+				productObj.setPid(rs.getString("Pid"));
+				productObj.setRetailerId(rs.getString("RetailerId"));
+				productObj.setRetailerName(rs.getString("RetailerName"));
+				productObj.setCategory(rs.getString("Category"));
+				productObj.setProductName(rs.getString("ProductName"));
+				productObj.setImagePath(rs.getString("ImagePath"));
+				productObj.setPrce(rs.getString("Price"));
+				productObj.setDiscount(rs.getString("Discount"));
+				productObj.setActive(rs.getString("Active"));
+				//System.out.println(productObj.getProductname() + productObj.getPid());
+				map.put(productObj.getPid(),productObj);
+			}
+			Products prod = new Products();
+			for (Map.Entry<String, Products> entry : map.entrySet()) {
+				prod = entry.getValue();
+				System.out.println("Product name: " + prod.getProductName() + "Product id: " + prod.getPid());
+			}
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
 	public void updateProducts(String category,String pid,String rid,String pName ,String iPath,String price,String discount,String active) {
 
 		int i = 0;
@@ -295,7 +337,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			sqlQuery = "update products set Category = '" + category + "', Pid = '" + pid + "',"
 					+ "RetailerId = '" + rid + "',ProductName = '" + pName + "',"
 					+ "ImagePath = '" + iPath + "',Price = '" + price + "',Discount = '" + discount + "',Active ='" + active + "' "
-					+ "where ProductName = '" + pName + "'";
+					+ "where Pid = '" + pid + "'";
 			System.out.println(sqlQuery);
 			i = stmt.executeUpdate(sqlQuery);
 
@@ -341,6 +383,34 @@ public class MySqlJDBC implements DatabaseConstants {
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
 			sqlQuery = "select * from products p inner join retailer r on p.RetailerId = r.RetailerId where p.Category = '" + categ + "'";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				if(!prodInfo.contains(rs.getString(1))){
+
+					Products p = new Products(rs.getString(1), rs.getString(2), rs.getString(10), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+					prodInfo.add(p);
+
+				}
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return prodInfo;
+	}
+	
+	public ArrayList<Products> selectRetailerProducts(String categ, String rid) {
+
+
+		ArrayList<Products> prodInfo=new ArrayList<Products>();
+		String temp = "1611161609508";
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from products p inner join retailer r on p.RetailerId = r.RetailerId where p.Category = '" + categ + "' AND r.RetailerId = '" + rid + "'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			while(rs.next()){
 				if(!prodInfo.contains(rs.getString(1))){

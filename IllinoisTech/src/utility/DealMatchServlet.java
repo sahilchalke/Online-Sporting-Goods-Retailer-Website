@@ -52,7 +52,7 @@ public class DealMatchServlet extends HttpServlet {
 			for(String i : keys){
 				
 				if(productsToDisplay.size()<2 && !productsToDisplay.containsKey(i)){
-					BufferedReader tweets = new BufferedReader(new FileReader(new File("C:/Computer Programming/eclipse/CSP595 Final Project/DealMatches.txt")));
+					BufferedReader tweets = new BufferedReader(new FileReader(new File("C:/Users/acdes/git/CSP-595-Final-Project/IllinoisTech/DealMatches.txt")));
 					line = tweets.readLine();
 					productName = allProducts.get(i).getProductName();
 					

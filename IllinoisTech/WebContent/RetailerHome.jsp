@@ -94,7 +94,7 @@ User user = (User)session.getAttribute("userData");
 								<button type="submit">Add Product</button>
 								</form>
 								<br>
-								<form action='UpdateDeleteProducts.jsp' method="POST">
+								<form action='RetailerModify.jsp' method="POST">
 								<button type="submit">Update/Delete Products</button>
 								</form>
 								<%}%>
