@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import="bean.*, database.MySqlJDBC" %>
-
-    pageEncoding="ISO-8859-1"%>
-    <%@ page import="bean.Products, database.MySqlJDBC, bean.Cart" %>
-   
->>>>>>> refs/remotes/origin/master
+<%@ page import="database.MySqlJDBC" %>
+	
+<%
+	MySqlJDBC mysql = new MySqlJDBC();
+	String username = request.getParameter("username");
+	String address = request.getParameter("address");
+	String email = request.getParameter("email");
+	String phone = request.getParameter("phonenumber");
+	String password = request.getParameter("password1");
+	mysql.insertRetailer(username, email);
+	mysql.insertUser(username, password, email, address, "Retailer", phone);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 <title>IllinoisTech Sporting Goods</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -18,18 +23,6 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
-<style>
-#login_container form input, #login_container form select, #login_container form textarea {
-	padding: 5px;
-	color: #333333;
-	border: 1px solid #ddd;
-	border-right:1px solid #ccc;
-	border-bottom:1px solid #ccc;
-	background-color:#fff;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
-</style>
 </head>
 <body>
 	<div id="body">
@@ -45,8 +38,8 @@
 						<ul>
 							<li><a href="#">Home</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a href="Login.jsp">Login</a></li>
-							<li><a href="#">Sign Up</a></li>
+							<li><a href="#">Login</a></li>
+							<li><a href="Signup.jsp">Sign Up</a></li>
 							<li><a href="#">Contact</a></li>
 						</ul>
 					</div>
@@ -71,8 +64,6 @@
 				<!-- End Slider -->
 			</div>
 		</div>
-		<!-- Top -->
-		<!-- Main -->
 		<div id="main">
 			<div class="shell">
 				<!-- Search, etc -->
@@ -90,59 +81,42 @@
 						</span> <span class="left more-links"> <a href="#">Checkout</a>
 					</div>
 				</div>
-				<!-- End Search, etc -->
-				<!-- Content -->
-				<div id="content">
-					<!--Login Container -->
-					<div id="container">
-						<div id="login_container">
-							<%
-	MySqlJDBC mysql = new MySqlJDBC();
-	String category = request.getParameter("category");
-	String pid = request.getParameter("pid");
-	String rid = request.getParameter("rid");
-	String pName = request.getParameter("pName");
-	String iPath = request.getParameter("iPath");
-	String price = request.getParameter("price");
-	String discount = request.getParameter("discount");
-	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, "1");
-	
-%>
-<h4><%=pName %> Added Successfully</h4>
-							
-						</div>
-						<!-- Brands -->
-						<div class="brands">
-							<h3>Brands</h3>
-							<div class="logos">
-								<a href="#"><img src="css/images/logo1.gif" alt="" /></a> <a
-									href="#"><img src="css/images/logo2.gif" alt="" /></a> <a
-									href="#"><img src="css/images/logo3.gif" alt="" /></a> <a
-									href="#"><img src="css/images/logo4.gif" alt="" /></a> <a
-									href="#"><img src="css/images/logo5.gif" alt="" /></a>
-							</div>
-						</div>
-						<!-- End Brands -->
-						<!-- Footer -->
-						<div id="footer">
-							<div class="left">
-								<a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span>
-								<a href="#">My Account</a> <span>|</span> <a href="#">The
-									Store</a> <span>|</span> <a href="#">Contact</a>
-							</div>
-							<div class="right">
-								&copy; Design by Grad Students at <a href="https://web.iit.edu">Illinois
-									Tech</a>
-							</div>
-						</div>
-						<!-- End Footer -->
+				    <div id="content">
+      <!--Login Container -->
+      <div id="container">
+      	<div id="login_container">
+      	<p align="center">You have been registered successfully. Kindly Login.</p>
+					<form action="Login.jsp">
+						<button type="submit">Login</button>
+					</form>
+      	</div>
+        <!-- Brands -->
+        <div class="brands">
+          <h3>Brands</h3>
+          <div class="logos"> <a href="#"><img src="css/images/logo1.gif" alt="" /></a> <a href="#"><img src="css/images/logo2.gif" alt="" /></a> <a href="#"><img src="css/images/logo3.gif" alt="" /></a> <a href="#"><img src="css/images/logo4.gif" alt="" /></a> <a href="#"><img src="css/images/logo5.gif" alt="" /></a> </div>
+        </div>
+        <!-- End Brands -->
+				<!-- End Brands -->
+				<!-- Footer -->
+				<div id="footer">
+					<div class="left">
+						<a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span>
+						<a href="#">My Account</a> <span>|</span> <a href="#">The
+							Store</a> <span>|</span> <a href="#">Contact</a>
 					</div>
-					<!-- End Container -->
+					<div class="right">
+						&copy; Design by Grad Students at <a href="https://web.iit.edu">Illinois
+							Tech</a>
+					</div>
 				</div>
-				<!-- End Content -->
+				<!-- End Footer -->
 			</div>
+			<!-- End Container -->
 		</div>
+		<!-- End Content -->
 	</div>
 	<!-- End Main -->
+	</div>
 </body>
 </html>
+		

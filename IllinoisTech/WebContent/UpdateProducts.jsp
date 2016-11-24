@@ -5,8 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <%
-HashMap<String,Product> map = new HashMap<String,Product>();
-Product prodObj = new Product();
+HashMap<String,Products> map = new HashMap<String,Products>();
+Products prodObj = new Products();
 
 MySqlJDBC mysqlObj=new MySqlJDBC();
 
@@ -103,7 +103,7 @@ if(mode!=null&&mode.equals("Delete"))
 						<%
 					String name=request.getParameter("productname");
 						if(session.getAttribute("productList")!=null){
-							map = (HashMap<String,Product>)session.getAttribute("productList");
+							map = (HashMap<String,Products>)session.getAttribute("productList");
 							prodObj = map.get(name);
 						}
 						%>
@@ -127,17 +127,17 @@ if(mode!=null&&mode.equals("Delete"))
 									 name="pid" value='<%=prodObj.getPid() %>' id="pid" required><br>
 
 								<label><b>RetailerId:</b></label><br> <input type="text"
-									 name="rid" value='<%=prodObj.getRetailerid() %>'  id="rid" required><br>
+									 name="rid" value='<%=prodObj.getRetailerId() %>'  id="rid" required><br>
 
 
 		<label><b>ProductName:</b></label><br> <input type="text"
-		 name="pName" value='<%=prodObj.getProductname()%>' id="pName" required><br>
+		 name="pName" value='<%=prodObj.getProductName()%>' id="pName" required><br>
 
 		<label><b>Image:</b></label><br> <input type="text"
-		name="iPath" value=<%=prodObj.getImage()%> id="iPath" required><br>
+		name="iPath" value=<%=prodObj.getImagePath()%> id="iPath" required><br>
 
 		<label><b>Price:</b></label><br> <input type="text"
-		name="price" value=<%=prodObj.getPrice() %> id="price" required><br>
+		name="price" value=<%=prodObj.getPrce() %> id="price" required><br>
 
 
 

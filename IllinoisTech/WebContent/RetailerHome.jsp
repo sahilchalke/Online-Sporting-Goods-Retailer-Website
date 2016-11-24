@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import="bean.*, database.MySqlJDBC" %>
-
-    pageEncoding="ISO-8859-1"%>
-    <%@ page import="bean.Products, database.MySqlJDBC, bean.Cart" %>
-   
->>>>>>> refs/remotes/origin/master
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,18 +11,6 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
-<style>
-#login_container form input, #login_container form select, #login_container form textarea {
-	padding: 5px;
-	color: #333333;
-	border: 1px solid #ddd;
-	border-right:1px solid #ccc;
-	border-bottom:1px solid #ccc;
-	background-color:#fff;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
-</style>
 </head>
 <body>
 	<div id="body">
@@ -96,19 +77,19 @@
 					<!--Login Container -->
 					<div id="container">
 						<div id="login_container">
-							<%
-	MySqlJDBC mysql = new MySqlJDBC();
-	String category = request.getParameter("category");
-	String pid = request.getParameter("pid");
-	String rid = request.getParameter("rid");
-	String pName = request.getParameter("pName");
-	String iPath = request.getParameter("iPath");
-	String price = request.getParameter("price");
-	String discount = request.getParameter("discount");
-	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, "1");
-	
-%>
-<h4><%=pName %> Added Successfully</h4>
+							
+								<div align="center">
+									<h2>Retailer Home</h2>
+								</div>
+								<form action='RetailerView.jsp' method="get">
+								<button type="submit">View Product</button>
+								</form>
+								<br>
+								<form action='RetailerAdd.jsp' method="POST">
+								<button type="submit">Add Product</button>
+								</form>
+								<br>
+							
 							
 						</div>
 						<!-- Brands -->

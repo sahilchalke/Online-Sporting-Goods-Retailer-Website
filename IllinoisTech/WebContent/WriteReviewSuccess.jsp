@@ -87,6 +87,9 @@
         </ul>
       </div>
       <%
+      try{
+    	  
+    	  
       String image = request.getParameter("productImage");
       String discount = request.getParameter("productDiscount");
       String productName = request.getParameter("productName");
@@ -95,6 +98,11 @@
       String date = request.getParameter("rdate");
       String text = request.getParameter("reviewtext");
       String username =request.getParameter("uid");
+      //String comment = request.getParameter("comment");
+      String id = request.getParameter("id");
+      
+      
+    	  
       MongoDbUtil.getConnection();
       BasicDBObject doc = new BasicDBObject("title", "myReviews").
       		append("productName", productName).
@@ -103,10 +111,14 @@
       		append("rating", rating).
       		append("date",date).
       		append("text", text);
+      
       MongoDbUtil.myReviews.insert(doc);
 
       %>
       <h4> Review Successfully submitted. </h4> 
+      
+          
+    
       <div id="container">
         <div class="tabbed">
           <!-- First Tab Content -->
@@ -134,6 +146,11 @@
             </div>
           </div>
           </div>
+          <%
+      }catch(Exception e){
+      	e.printStackTrace();
+      }
+          %>
       <!-- Brands -->
         <div class="brands">
           <h3>Brands</h3>

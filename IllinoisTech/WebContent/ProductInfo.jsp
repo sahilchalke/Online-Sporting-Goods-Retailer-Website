@@ -1,15 +1,19 @@
-<<<<<<< HEAD
+
+<%@page import="com.mongodb.DBCollection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
-<%@page import="bean.Products"%>
+<%@page import="bean.Products, bean.User"%>
 <%@ page import="com.mongodb.DBCursor"%>
 <%@page import="database.MySqlJDBC"%>  
 
 <%@ page import="com.mongodb.BasicDBObject"%>
 <%@page import="database.MongoDbUtil"%>
-<%  MySqlJDBC mysql = new MySqlJDBC(); %>
+<%  
+	MySqlJDBC mysql = new MySqlJDBC(); 
+	User user = (User)request.getSession().getAttribute("userData");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,11 +36,19 @@
       <h1 id="logo"><a href="#">IllinoisTech Sporting Goods</a></h1>
       <div id="navigation">
         <ul>
-          <li><a href="#">Home</a></li>
+          <%if(user!=null) {%>	
+          <li><a href="UserHome.jsp">Home</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">My Orders</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="index.jsp?value=logout">Logout</a></li>
+          <%}else{ %>
+          <li><a href="index.jsp">Home</a></li>
           <li><a href="#">Support</a></li>
           <li><a href="Login.jsp">Login</a></li>
           <li><a href="Signup.html">Sign Up</a></li>
           <li><a href="#">Contact</a></li>
+          <%} %>
         </ul>
       </div>
     </div>
@@ -47,10 +59,6 @@
         <ul>
           <li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
           <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>
-          <!--<li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide1.jpg" alt="" /></a></li>
-          <li><a href="#"><img src="css/images/slide2.jpg" alt="" /></a></li>-->
         </ul>
       </div>
       <div id="slider-nav"> <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a></div>
@@ -63,7 +71,10 @@
 <div id="main">
   <div class="shell">
     <!-- Search, etc -->
-    <div class="options">
+   <div class="options">
+      <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	 <p>Search IllinoisTech</p>
+      </div>
       <div class="search">
         <form action="#" method="post">
           <span class="field">
@@ -72,7 +83,15 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
+      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px;">
+      	<%if(user!=null){ %>
+      	<p>Hello, <%=user.getUsername() %></p>
+      	<%} %>
+      </div>
+      <div class="right" style="float: left; margin-left:30px"> 
+      	<span class="cart"><a href="ViewCart.jsp" class="cart-ico">&nbsp;</a><strong>$0.00</strong></span> 
+      	<span class="left more-links"> <a href="UserHome.jsp">Products</a></span>
+      </div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
@@ -93,10 +112,31 @@
       <!-- Tabs -->
       <!-- Container -->
        <%
-       	String productName = request.getParameter("productName");
-       	String price = request.getParameter("productPrice");
-       	String discount = request.getParameter("discount");
-       	String image = request.getParameter("productImage");
+        String productName = "";
+      	String price = "";
+      	String discount = "";
+      	String image = "";
+      	String retailer = "";
+      	String productId = "";
+        if(request.getParameter("value")!=null){
+        	if(request.getParameter("value").equals("fromAjax")){
+        		Products prod = new Products();
+        		prod = (Products)request.getSession().getAttribute("Product");
+        		 productName = prod.getProductName();
+               	 price = prod.getPrce();
+               	 discount = prod.getDiscount();
+               	 image = prod.getImagePath();
+               	 retailer = prod.getRetailerName();
+               	 productId = prod.getPid();
+        	}
+        }else{
+	      	 productName = request.getParameter("productName");
+	      	 price = request.getParameter("productPrice");
+	      	 discount = request.getParameter("discount");
+	      	 image = request.getParameter("productImage");
+	      	 retailer = request.getParameter("retailerName");
+	      	 productId = request.getParameter("productId");
+        }
        %>
       <div id="container">
       
@@ -105,32 +145,26 @@
           <div class="tab-content" style="display:block;">
             <div class="items">
               <div class="cl">&nbsp;</div>
-      
-       
-       <ul>
-       <li>
-                  <div class="image"> <img src="<%= image %>" alt="" style="width: 150px; height: 150px;"/></div>
-                  <p> Product Name : <span><%= productName %></span><br/> </p>        
-                  <p class="price">Price: <strong><%= price %></strong></p>
-                  <p> Discount : <span><%= discount %></span><br /></p>
-                  <br>
-                  <form class = 'submit-button' method = 'post' action = 'AddToCart.jsp'  >
-			            <input type='hidden' name = 'productName' value = '<%=productName %>' />
-			            <input type='hidden' name = 'productPrice' value = '<%=price %>' />
-			            <input type='hidden' name = 'productImage' value = '<%=image %>' />
-			            <input type='hidden' name = 'discount' value = '<%=discount %>' />			           
-			            <input class = 'submit-button' type = 'submit'  value = 'Add To Cart' style="width: 100px; height: 30px;"/>
-			        </form>
-			        
-                  </li>
-                  </ul>
-                 
+       		  <ul>
+       		  <li>
+                 <div class="image"> <img src="<%= image %>" alt="" style="width: 150px; height: 150px;"/></div>
+                 <br></br><p> Product Name: <span><%= productName %></span></p>
+                 <p>Retailer Name: <span><%= retailer%></span></p>        
+                 <p>Price: <span><%= price %></span></p>
+                 <p> Discount: <span><%= discount%></span></p>
+                 <br></br>
+                 <center>
+                  <form class = 'submit-button' method = 'post' action = 'ViewCart.jsp'>		           
+                  		<input type="hidden" name="productId" value="<%=productId%>"/>
+                  		<input type="hidden" name="action" value="addToCart"/>
+			            <input class = 'submit-button' type = 'submit'  value = 'AddToCart' style="width: 100px; height: 30px;"/>
+			      </form>
+			     </center>
+               </li>
+               </ul>
                   </div>
                   </div>
-                 
-                  
           <!-- End Prod Info -->
-         <div class="tabbed">
           <!-- second Tab Content -->
           <%
           String searchField = "productName";
@@ -170,7 +204,7 @@
 				%>
 				 <ul>
        <li>
-				<br><br><hr>
+				<br></br><br></br>
 				
 				<table class='specialtable'>
 				<% BasicDBObject obj = (BasicDBObject) cursor.next(); %>				
@@ -215,7 +249,7 @@
 				<td><%= reviewText %></td>
 				</tr>
 				</table>
-				<br><br>
+				<br></br><br></br>
 				</li>
                   </ul>
 			<% 
@@ -228,7 +262,6 @@
                   </div>
                   </div>
           <!-- End View  Review -->
-          <div class="tabbed">
           <!-- Third Tab Content -->
           <div class="tab-content" style="display:block;">
             <div class="items">
@@ -239,25 +272,25 @@
        <li>
                   
                   <form method='post' action='WriteReviewSuccess.jsp'>
-			<br>
+			<br></br>
 			<h3>Write Review</h3>
 			<table class='specialtable'>
 			<tr><td>Product Name: </td><td> <%= productName %></td></tr>
 			<tr><td>Product Price: </td><td> <%= price %></td></tr>
-			<tr><td>Username: </td><td> <input type='text' name='uid'></td></tr>
-			<tr><td>ReviewRating (1 to 5): </td><td> <input type='text' name='rating'></td></tr>
-			<tr><td>ReviewDate: </td><td> <input type='date' name='rdate'></td></tr>
-			<tr><td>ReviewText: </td><td> <input type='text' name='reviewtext'></td></tr>
+			<tr><td>Username: </td><td> <input type='text' name='uid'/></td></tr>
+			<tr><td>ReviewRating (1 to 5): </td><td> <input type='text' name='rating'/></td></tr>
+			<tr><td>ReviewDate: </td><td> <input type='date' name='rdate'/></td></tr>
+			<tr><td>ReviewText: </td><td> <input type='text' name='reviewtext'/></td></tr>
 			<tr></tr>
 			<tr></tr>
 			<tr></tr>
 			<tr>
 			<td colspan='2'>
 			<input type='submit' name='review' value='Submit Review' />
-			<input type='hidden' name = 'productName' value = '<%=productName %>'>
-            <input type='hidden' name = 'productPrice' value = '<%= price %>'>
-            <input type='hidden' name = 'productImage' value = '<%= image %>'>
-            <input type='hidden' name = 'productDiscount' value = '<%= discount %>'>
+			<input type='hidden' name = 'productName' value = '<%=productName %>'/>
+            <input type='hidden' name = 'productPrice' value = '<%= price %>'/>
+            <input type='hidden' name = 'productImage' value = '<%= image %>'/>
+            <input type='hidden' name = 'productDiscount' value = '<%= discount %>'/>
            	</td>
 			</tr>
 			</table>
@@ -271,6 +304,8 @@
                   
           <!-- End Write Review -->
         </div>
+        </div>
+        </div>
         <!-- Brands -->
         <div class="brands">
           <h3>Brands</h3>
@@ -282,15 +317,12 @@
           <div class="left"> <a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span> <a href="#">My Account</a> <span>|</span> <a href="#">The Store</a> <span>|</span> <a href="#">Contact</a> </div>
           <div class="right"> &copy; Design by Grad Students at <a href="https://web.iit.edu">Illinois Tech</a> </div>
         </div>
-        </center>
         <!-- End Footer -->
       </div>
       <!-- End Container -->
     </div>
     <!-- End Content -->
   </div>
-</div>
-</div>
 <!-- End Main -->
 </body>
 </html>

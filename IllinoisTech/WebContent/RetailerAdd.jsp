@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import="bean.*, database.MySqlJDBC" %>
-
-    pageEncoding="ISO-8859-1"%>
-    <%@ page import="bean.Products, database.MySqlJDBC, bean.Cart" %>
-   
->>>>>>> refs/remotes/origin/master
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,18 +11,6 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
-<style>
-#login_container form input, #login_container form select, #login_container form textarea {
-	padding: 5px;
-	color: #333333;
-	border: 1px solid #ddd;
-	border-right:1px solid #ccc;
-	border-bottom:1px solid #ccc;
-	background-color:#fff;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
-</style>
 </head>
 <body>
 	<div id="body">
@@ -96,19 +77,53 @@
 					<!--Login Container -->
 					<div id="container">
 						<div id="login_container">
-							<%
-	MySqlJDBC mysql = new MySqlJDBC();
-	String category = request.getParameter("category");
-	String pid = request.getParameter("pid");
-	String rid = request.getParameter("rid");
-	String pName = request.getParameter("pName");
-	String iPath = request.getParameter("iPath");
-	String price = request.getParameter("price");
-	String discount = request.getParameter("discount");
-	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, "1");
-	
-%>
-<h4><%=pName %> Added Successfully</h4>
+							<form action='AddProductsDB.jsp' method="POST">
+								<div align="center">
+									<h2>Retailer Product To Added</h2>
+								</div>
+								<label><b>Category:</b></label><br>
+								<br>
+								<div class="form-group">
+									<label for="sel1">Select list:</label> <select
+										name="category" id="sel1">
+										<option value=Baseball>Baseball</option>
+										<option value=Basketball>Basketball</option>
+										<option value=Soccer>Soccer</option>
+										<option value=Football>Football</option>
+										<option value=Other>Other</option>
+									</select>
+								</div>
+								<br>
+
+								<label><b>ProductId:</b></label><br> <input type="text"
+									placeholder="Enter PID" name="pid" id="pid" required><br>
+
+								<label><b>RetailerId:</b></label><br> <input type="text"
+									placeholder="Enter RID" name="rid" id="rid" required><br>
+
+
+								<label><b>ProductName:</b></label><br> <input type="text"
+									placeholder="Enter PName" name="pName" id="pName" required><br>
+
+								<label><b>Image:</b></label><br> <input type="text"
+									placeholder="Enter IPath" name="iPath" id="iPath" required><br>
+
+								<label><b>Price:</b></label><br> <input type="text"
+									placeholder="Enter Price" name="price" id="price" required><br>
+
+
+
+								<label><b>Discount:</b></label><br> <input type="text"
+									placeholder="Enter Discount" name="discount" id="discount"
+									required><br> 
+									
+									<label><b>Active:</b></label><br>
+								<input type="text" value="1" name="active" id="active" required><br>
+
+								<button type="submit">Add</button>
+								
+								<br>
+							</form>
 							
 						</div>
 						<!-- Brands -->
