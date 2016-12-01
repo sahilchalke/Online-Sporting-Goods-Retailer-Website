@@ -31,9 +31,9 @@
 				}
 				if (user.getRole().equalsIgnoreCase("manager")||user.getRole().equalsIgnoreCase("retailer")) {
 					System.out.println("Logged in.");
-					cart = mysql.getUserCart(user.getUid());
+					/*cart = mysql.getUserCart(user.getUid());
 					request.getSession().setAttribute("userCart", cart);
-					request.getSession().setAttribute("userProf", "complete");
+					request.getSession().setAttribute("userProf", "complete");*/
 					
 					//Creating retailer session
 					retailer = mysql.getRetailerData(email);

@@ -24,16 +24,15 @@ User user = (User)session.getAttribute("userData");
 				<!-- Header -->
 				<div id="header">
 					<h1 id="logo">
-						<a href="#">IllinoisTech Sporting Goods</a>
+						<a href="RetailerHome.jsp">IllinoisTech Sporting Goods</a>
 					</h1>
 					<div id="navigation">
-						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Support</a></li>
-							<li><a href="Login.jsp">Login</a></li>
-							<li><a href="#">Sign Up</a></li>
-							<li><a href="#">Contact</a></li>
-						</ul>
+							<ul>
+					          <li><a href="#">Support</a></li>
+					          <li><a href="RetailerHome.jsp">My Actions</a></li>
+					          <li><a href="#">Contact</a></li>
+					          <li><a href="index.jsp?value=logout">Logout</a></li>	
+        					</ul>
 					</div>
 				</div>
 				<!-- End Header -->
@@ -62,19 +61,25 @@ User user = (User)session.getAttribute("userData");
 			<div class="shell">
 				<!-- Search, etc -->
 				<div class="options">
-					<div class="search">
-						<form action="#" method="post">
-							<span class="field"> <input type="text" class="blink"
-								value=" search here.." title="SEARCH" />
-							</span> <input type="text" class="search-submit" value="GO" />
-						</form>
-					</div>
-					<div class="right">
-						<span class="cart"> <a href="#" class="cart-ico">&nbsp;</a>
-							<strong>$0.00</strong>
-						</span> <span class="left more-links"> <a href="#">Checkout</a>
-					</div>
-				</div>
+				      <div style="float: left; margin-top: 10px; padding-right: 7px;">
+				    	 <p>Search IllinoisTech</p>
+				      </div>
+				      <div class="search">
+				        <form action="#" method="post">
+				          <span class="field">
+				          <input type="text" class="blink" value=" search here.." title="SEARCH" />
+				          </span>
+				          <input type="text" class="search-submit" value="GO" />
+				        </form>
+				      </div>
+				      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px; width: 150px:">
+				      	<p>Hello, <%=user.getUsername() %></p>
+				      </div>
+				      <div class="right" style="float: left; margin-left:30px"> 
+				      	<span class="cart"><a href="ViewCart.jsp" class="cart-ico">&nbsp;</a><strong>$0.00</strong></span> 
+				      	<span class="left more-links"> <a href="UserHome.jsp">Products</a></span>
+				      </div>
+				    </div>
 				<!-- End Search, etc -->
 				<!-- Content -->
 				<div id="content">
@@ -82,10 +87,10 @@ User user = (User)session.getAttribute("userData");
 					<div id="container">
 						<div id="login_container">
 							
-								<div align="center">
-									<h2><%=user.getRole()%> Home</h2>
-								</div>
 								<%if(user.getRole().equalsIgnoreCase("retailer")){%>
+								<div align="center">
+									<h2>Manager Actions</h2>
+								</div><br>
 								<form action='RetailerView.jsp' method="get">
 								<button type="submit">View Product</button>
 								</form>
@@ -99,6 +104,9 @@ User user = (User)session.getAttribute("userData");
 								</form>
 								<%}%>
 								<%if(user.getRole().equalsIgnoreCase("manager")){%>
+								<div align="center">
+									<h2>My Actions</h2>
+								</div><br>
 								<form action='RetailerAdd.jsp' method="POST">
 								<button type="submit">Add Product</button>
 								</form>

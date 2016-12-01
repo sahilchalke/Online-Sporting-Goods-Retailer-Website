@@ -35,10 +35,9 @@
 					</h1>
 					<div id="navigation">
 						<ul>
-							<li><a href="#">Home</a></li>
+							<li><a href="index.jsp">Home</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a href="#">Login</a></li>
-							<li><a href="Signup.jsp">Sign Up</a></li>
+							<li><a href="Login.jsp">Login</a></li>
 							<li><a href="#">Contact</a></li>
 						</ul>
 					</div>
@@ -80,7 +79,7 @@
 						</span> <span class="left more-links"> <a href="#">Checkout</a>
 					</div>
 				</div>
-				    <div id="content">
+	<div id="content">
       <!--Login Container -->
       <div id="container">
       	<div id="login_container">
@@ -115,6 +114,7 @@
 		<!-- End Content -->
 	</div>
 	<!-- End Main -->
+	</div>
 	</div>
 </body>
 </html>

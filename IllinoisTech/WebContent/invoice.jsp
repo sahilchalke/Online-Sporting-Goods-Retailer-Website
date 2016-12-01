@@ -4,8 +4,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
 <%@ page import="java.text.*"%>
-<%@ page import="java.time.*"%>
-<%@ page import="java.time.format.*"%>
 <%@page import="bean.Products, bean.Cart, bean.User"%>
 <%@page import="database.MySqlJDBC"%>
 
@@ -114,10 +112,9 @@
 									date.setTime(date.getTime() + 14 * 1000 * 60 * 60 * 24);
 								%>
 								<%
-									DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-									LocalDate localDate = LocalDate.now();
 									
-									
+									DateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+									Date localDate = new Date();
 									
 									mysql.insertInvoice(orderid, user.getUid(), cc, sum, format.format(date),
 											dtf.format(localDate), shipAdd);

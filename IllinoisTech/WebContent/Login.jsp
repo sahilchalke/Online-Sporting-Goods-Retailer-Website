@@ -117,10 +117,10 @@
   <div class="shell">
     <!-- Header -->
     <div id="header">
-      <h1 id="logo"><a href="#">IllinoisTech Sporting Goods</a></h1>
+      <h1 id="logo"><a href="index.jsp">IllinoisTech Sporting Goods</a></h1>
       <div id="navigation">
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="index.jsp">Home</a></li>
           <li><a href="#">Support</a></li>
           <li><a href="Signup.html">Sign Up</a></li>
           <li><a href="#">Contact</a></li>
@@ -151,15 +151,23 @@
   <div class="shell">
     <!-- Search, etc -->
     <div class="options">
-      <div class="search">
-        <form action="#" method="post">
-          <span class="field">
-          <input type="text" class="blink" value=" search here.." title="SEARCH" />
-          </span>
-          <input type="text" class="search-submit" value="GO" />
-        </form>
+    <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    	 <p>Search IllinoisTech</p>
       </div>
-      <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></div>
+      <div class="search">
+      		<div>
+      			<span class="field">	
+				<input type="text" class="blink" name="searchId" id="searchId" onkeyup="doCompletion()" value="  Search here.." autocomplete="on"/>
+				</span>
+				<input type="text" class="search-submit" value="GO" />
+			</div>	
+			<div id="autocompleteContainer" style="height: auto; float: top; margin-top: 25px;">
+					<table id="complete-table" 
+					style="position: absolute; border-collapse: collapse; background: white; font-size: 14px; width: 195px;">
+					</table>
+			</div>	
+	  </div>
+      <div class="right"> <span class="cart"> <a href="Login.jsp" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span></div>
     </div>
     <!-- End Search, etc -->
     <!-- Content -->
