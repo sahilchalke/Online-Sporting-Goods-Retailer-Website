@@ -87,9 +87,9 @@ User user = (User)session.getAttribute("userData");
 					<div id="container">
 						<div id="login_container">
 							
-								<%if(user.getRole().equalsIgnoreCase("retailer")){%>
+								<%if(user.getRole().equalsIgnoreCase("Retailer")){%>
 								<div align="center">
-									<h2>Manager Actions</h2>
+									<h2>My Actions</h2>
 								</div><br>
 								<form action='RetailerView.jsp' method="get">
 								<button type="submit">View Product</button>
@@ -105,7 +105,7 @@ User user = (User)session.getAttribute("userData");
 								<%}%>
 								<%if(user.getRole().equalsIgnoreCase("manager")){%>
 								<div align="center">
-									<h2>My Actions</h2>
+									<h2>Manager Actions</h2>
 								</div><br>
 								<form action='RetailerAdd.jsp' method="POST">
 								<button type="submit">Add Product</button>
