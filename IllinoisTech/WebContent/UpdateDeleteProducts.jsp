@@ -14,6 +14,9 @@
 <script src="js/jquery-func.js" type="text/javascript"></script>
 </head>
 <%String message = request.getParameter("message"); %>
+<%
+User user = (User)session.getAttribute("userData");
+%>
 <body>
 	<div id="body">
 		<!-- Top -->
@@ -26,11 +29,10 @@
 					</h1>
 					<div id="navigation">
 						<ul>
-							<li><a href="#">Home</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a href="Login.jsp">Login</a></li>
-							<li><a href="#">Sign Up</a></li>
-							<li><a href="#">Contact</a></li>
+					          <li><a href="RetailerHome.jsp">My Actions</a></li>
+					          <li><a href="#">Contact</a></li>
+					          <li><a href="index.jsp?value=logout">Logout</a></li>	
 						</ul>
 					</div>
 				</div>
@@ -67,6 +69,9 @@
 							</span> <input type="text" class="search-submit" value="GO" />
 						</form>
 					</div>
+					 <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px; width: 150px:">
+				      	<p>Hello, <%=user.getUsername() %></p>
+				      </div>
 					<div class="right">
 						<span class="cart"> <a href="#" class="cart-ico">&nbsp;</a>
 							<strong>$0.00</strong>
@@ -110,9 +115,11 @@
 										
 							
 							
-							<input type="submit" value="Update" name="active" id="active" required><br>
-							
-							<input type="submit" value="Delete" name="active" id="active" required><br>
+							<input STYLE = "background-color: #4CAF50; color: white; 	padding: 14px 20px; margin: 8px 0; border: none; 
+	width: 100%;" type="submit" value="Update" name="active" id="active" required><br>				
+						
+		<input STYLE = "background-color: #4CAF50; color: white; 	padding: 14px 20px; margin: 8px 0; border: none; 
+	width: 100%;" type="submit" value="Delete" name="active" id="active" required><br>	
 							</form>
 							
 							

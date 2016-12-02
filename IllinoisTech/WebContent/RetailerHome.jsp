@@ -77,7 +77,7 @@ User user = (User)session.getAttribute("userData");
 				      </div>
 				      <div class="right" style="float: left; margin-left:30px"> 
 				      	<span class="cart"><a href="ViewCart.jsp" class="cart-ico">&nbsp;</a><strong>$0.00</strong></span> 
-				      	<span class="left more-links"> <a href="UserHome.jsp">Products</a></span>
+				      	
 				      </div>
 				    </div>
 				<!-- End Search, etc -->

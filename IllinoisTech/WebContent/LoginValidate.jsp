@@ -37,7 +37,7 @@
 					
 					//Creating retailer session
 					retailer = mysql.getRetailerData(email);
-					if(retailer.getFlag().equals("0")){
+					if(retailer.getFlag().equals("0") || retailer.getFlag().equals("2")){
 						response.sendRedirect("RetailerStatus.jsp?status="+retailer.getFlag());
 					}
 					session.setAttribute("retailer", retailer);

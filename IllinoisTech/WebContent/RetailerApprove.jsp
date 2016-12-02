@@ -43,11 +43,10 @@ ArrayList<Retailer> retailerList = mysql.getAllRetailerData();
 					</h1>
 					<div id="navigation">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Support</a></li>
-							<li><a href="Login.jsp">Login</a></li>
-							<li><a href="#">Sign Up</a></li>
-							<li><a href="#">Contact</a></li>
+							 <li><a href="#">Support</a></li>
+					          <li><a href="RetailerHome.jsp">My Actions</a></li>
+					          <li><a href="#">Contact</a></li>
+					          <li><a href="index.jsp?value=logout">Logout</a></li>	
 						</ul>
 					</div>
 				</div>
@@ -84,6 +83,9 @@ ArrayList<Retailer> retailerList = mysql.getAllRetailerData();
 							</span> <input type="text" class="search-submit" value="GO" />
 						</form>
 					</div>
+					<div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px; width: 150px:">
+				      	<p>Hello, <%=user.getUsername() %></p>
+				      </div>
 					<div class="right">
 						<span class="cart"> <a href="#" class="cart-ico">&nbsp;</a>
 							<strong>$0.00</strong>
