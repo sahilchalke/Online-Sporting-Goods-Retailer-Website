@@ -128,10 +128,14 @@ User user = (User)session.getAttribute("userData");
 								<br>
 
 								<label><b>ProductId:</b></label><br> <input type="text"
-									 name="pid" value='<%=prodObj.getPid() %>' id="pid" required><br>
+									 name="pidtemp" value='<%=prodObj.getPid() %>' id="pidtemp" disabled><br>
+									 <input type="hidden"
+									 name="pid" value='<%=prodObj.getPid() %>' id="pid">
 
 								<label><b>RetailerId:</b></label><br> <input type="text"
-									 name="rid" value='<%=prodObj.getRetailerId() %>'  id="rid" required><br>
+									 name="ridtemp" value='<%=prodObj.getRetailerId() %>'  id="ridtemp" disabled><br>
+									 <input type="hidden"
+									 name="rid" value='<%=prodObj.getRetailerId() %>'  id="rid">
 
 
 		<label><b>ProductName:</b></label><br> <input type="text"
@@ -148,8 +152,8 @@ User user = (User)session.getAttribute("userData");
 	<label><b>Discount:</b></label><br> <input type="text" name="discount" 
 	value = '<%=prodObj.getDiscount()%>' id="discount" required><br> 
 									
-	<label><b>Active:</b></label><br>
-	<input type="text" value='<%=prodObj.getActive() %>' name="active" id="active" required><br>
+	<%-- <label><b>Active:</b></label><br>
+	<input type="text" value='<%=prodObj.getActive() %>' name="active" id="active" required><br> --%>
 
 								<button type="submit">Update</button>
 								

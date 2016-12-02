@@ -291,7 +291,7 @@ public class MySqlJDBC implements DatabaseConstants {
 
 		HashMap<String,Products> map =new HashMap<String,Products>();
 		Products productObj;
-        String temp= "2311161613492";
+		String temp= "2311161613492";
 		try{
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
@@ -328,7 +328,7 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return map;
 	}
-	
+
 	public void updateProducts(String category,String pid,String rid,String pName ,String iPath,String price,String discount,String active) {
 
 		int i = 0;
@@ -342,6 +342,7 @@ public class MySqlJDBC implements DatabaseConstants {
 					+ "where Pid = '" + pid + "'";
 			System.out.println(sqlQuery);
 			i = stmt.executeUpdate(sqlQuery);
+			System.out.println("Update: " + i);
 
 			//Close db connection.
 			stmt.close();
@@ -402,7 +403,7 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return prodInfo;
 	}
-	
+
 	public ArrayList<Products> selectRetailerProducts(String categ, String rid) {
 
 
@@ -512,26 +513,26 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public static HashMap query2(HashMap<String,Integer> topOrderedProducts) {
 
-  		try {
-  			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-  			String topProdcuts = "select p.productname, o.pid, count(*) as count from products p inner join orders o on p.pid=o.oid group "
-  					+ "by o.pid order by count desc;";
-  			PreparedStatement pst = (PreparedStatement) conn.prepareStatement(topProdcuts);
-  			ResultSet rs = pst.executeQuery();
-  			while (rs.next()) {
-          Integer count = rs.getInt("count");
-  				String pName = rs.getString("productname");
-  				topOrderedProducts.put(pName,count);
-  			}
+		try {
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			String topProdcuts = "select p.productname, o.pid, count(*) as count from products p inner join orders o on p.pid=o.oid group "
+					+ "by o.pid order by count desc;";
+			PreparedStatement pst = (PreparedStatement) conn.prepareStatement(topProdcuts);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Integer count = rs.getInt("count");
+				String pName = rs.getString("productname");
+				topOrderedProducts.put(pName,count);
+			}
 
-  		} catch (Exception e) {
-  		}
-  		return topOrderedProducts;
-  	}
+		} catch (Exception e) {
+		}
+		return topOrderedProducts;
+	}
 
 
 	public void addCreditCart(String uid, String ccnumber, String name, String cvv, String exp, String billadd){
@@ -549,7 +550,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addOrders(String oid, String pid, String quantity, String warranty, String price){
 
 		try{
@@ -566,7 +567,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void insertInvoice(String oid,String uid,  String cc, String total, String delDate, String purDate, String shipAdd){
 
 		try{
@@ -574,7 +575,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			stmt = conn.createStatement();
 			sqlQuery = "insert into invoice (OID, UID, CC, Total, DeliveryDate, PurchaseDate, ShippingAddress)"
 					+ "values('"+ oid + "', '" + uid + "', '"+  cc + "', '" + total +"', '" + delDate +"', '" + purDate + "', '"+shipAdd+ "');";
-		//	System.out.println(sqlQuery);
+			//	System.out.println(sqlQuery);
 			int i = stmt.executeUpdate(sqlQuery);
 			//Close db connection.
 			stmt.close();
@@ -583,7 +584,7 @@ public class MySqlJDBC implements DatabaseConstants {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public HashMap<String, Products> getProdFromDB(String oid){
 
 		HashMap<String, Products> prodMap = new HashMap<String, Products>();
@@ -606,14 +607,14 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return prodMap;
 	}
-	
+
 	public void deleteOrder(String orderid){
-		
+
 		try{
 
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
-			
+
 			sqlQuery = "delete from orders where oid = '"+orderid+ "';";
 			int j = stmt.executeUpdate(sqlQuery);
 			//Close db connection.
@@ -622,7 +623,7 @@ public class MySqlJDBC implements DatabaseConstants {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	//Getting Retailer Data
@@ -650,58 +651,80 @@ public class MySqlJDBC implements DatabaseConstants {
 		}
 		return retailer;
 	}
-	
+
 	//Getting all Retailer 
-	
-		public boolean changeRetailerAuth (String rid,String flag){
-			
-		
-			try{
-				conn = DriverManager.getConnection(DB_URL,USER,PASS);
-				stmt = conn.createStatement();
-				sqlQuery = "update retailer set Flag = '"+flag+"' where RetailerId = '"+rid+"'";
-				int rs = stmt.executeUpdate(sqlQuery);
-				
-				//Close db connection.
-				stmt.close();
-				conn.close();
-				if(rs==0){
-					return false;
-				}
-				
-			}catch(SQLException e){
-				e.printStackTrace();
+
+	public boolean changeRetailerAuth (String rid,String flag){
+
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "update retailer set Flag = '"+flag+"' where RetailerId = '"+rid+"'";
+			int rs = stmt.executeUpdate(sqlQuery);
+
+			//Close db connection.
+			stmt.close();
+			conn.close();
+			if(rs==0){
+				return false;
 			}
-			return true;
-			
+
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
+		return true;
 
-		//change retailer status 
-				public ArrayList<Retailer> getAllRetailerData(){
-					ArrayList<Retailer> retailerList = new ArrayList<Retailer>();
-					
+	}
 
-					try{
-						conn = DriverManager.getConnection(DB_URL,USER,PASS);
-						stmt = conn.createStatement();
-						sqlQuery = "select * from retailer";
-						ResultSet rs = stmt.executeQuery(sqlQuery);
+	//change retailer status 
+	public ArrayList<Retailer> getAllRetailerData(){
+		ArrayList<Retailer> retailerList = new ArrayList<Retailer>();
 
-						while(rs.next()){
-							Retailer retailer = new Retailer();
-							retailer.setRid(rs.getString("RetailerId"));
-							retailer.setRetailerName(rs.getString("RetailerName"));
-							retailer.setEmail(rs.getString("Email"));
-							retailer.setFlag(rs.getString("Flag"));
-							retailerList.add(retailer);
-						}
-						//Close db connection.
-						stmt.close();
-						conn.close();
-					}catch(SQLException e){
-						e.printStackTrace();
-					}
-					return retailerList;
-				}
+
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "select * from retailer";
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+
+			while(rs.next()){
+				Retailer retailer = new Retailer();
+				retailer.setRid(rs.getString("RetailerId"));
+				retailer.setRetailerName(rs.getString("RetailerName"));
+				retailer.setEmail(rs.getString("Email"));
+				retailer.setFlag(rs.getString("Flag"));
+				retailerList.add(retailer);
+			}
+			//Close db connection.
+			stmt.close();
+			conn.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return retailerList;
+	}
+
+	public boolean emptyUserCart(String userid){
+		
+		try{
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+			sqlQuery = "delete from cart where uid = '"+userid+"'" ;
+			System.out.println(sqlQuery);
+			int rs = stmt.executeUpdate(sqlQuery);
+			//Close db connection.
+			stmt.close();
+			conn.close();
+			if(rs == 0)
+				return false;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+		
+	}
+
 
 }

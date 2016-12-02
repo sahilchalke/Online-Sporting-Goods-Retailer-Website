@@ -31,7 +31,7 @@ public class AjaxUtility implements DatabaseConstants{
 			//Fetch product data from result set.
 			while(rs.next()){
 				sb.append("<product>");
-				sb.append("<id>" + rs.getInt("pid") + "</id>");
+				sb.append("<id>" + rs.getString("pid") + "</id>");
 				sb.append("<productName>" + rs.getString("productName") + "</productName>");
 				sb.append("</product>");
 			}

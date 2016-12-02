@@ -88,7 +88,7 @@ User user = (User)session.getAttribute("userData");
 									<%}%>
 						<div id="login_container">
 						
-						<h2>Update and Delete Products</h2>
+						<h2>Update and Delete Products</h2><br>
 						<form action='UpdateProducts.jsp' class ="register" method="POST">
 						<select name="productname" id="sel1">
 						<%

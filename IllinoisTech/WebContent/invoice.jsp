@@ -7,6 +7,18 @@
 <%@page import="bean.Products, bean.Cart, bean.User"%>
 <%@page import="database.MySqlJDBC"%>
 
+<%
+	if(request.getSession().getAttribute("userData") == null || request.getSession().getAttribute("userCart") == null)
+		System.out.println("User/Cart null");
+	User user = (User)request.getSession().getAttribute("userData");
+    Cart cart = (Cart)request.getSession().getAttribute("userCart");
+    MySqlJDBC mysql = new MySqlJDBC();
+    cart.getProductList().removeAll(cart.getProductList());
+    request.getSession().setAttribute("userCart", cart);
+    mysql.emptyUserCart(user.getUid());
+    
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -81,9 +93,9 @@
 					<div id="container">
 						
 							<%
-								User user = (User) request.getSession().getAttribute("userData");
+								/*User user = (User) request.getSession().getAttribute("userData");
 								MySqlJDBC mysql = new MySqlJDBC();
-								Cart cart = (Cart) request.getSession().getAttribute("userCart");
+								Cart cart = (Cart) request.getSession().getAttribute("userCart");*/
 								Products prod = new Products();
 								Orders ord = new Orders();
 								

@@ -103,8 +103,8 @@ User user = (User) session.getAttribute("userData");
 	String iPath = request.getParameter("iPath");
 	String price = request.getParameter("price");
 	String discount = request.getParameter("discount");
-	String active = request.getParameter("active");
-	mysql.updateProducts(category, pid, rid, pName ,iPath, price, discount, active );
+	//String active = request.getParameter("active");
+	mysql.updateProducts(category, pid, rid, pName ,iPath, price, discount, "1" );
 	if(user.getRole().equalsIgnoreCase("manager")){
 		response.sendRedirect("UpdateDeleteProducts.jsp?message=Product updated Successfully");
 	}

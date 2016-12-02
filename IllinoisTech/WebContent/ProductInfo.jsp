@@ -271,7 +271,7 @@
           <!-- End View  Review -->
           <!-- Third Tab Content -->
           <div class="tab-content" style="display:block;">
-             <div id="container">
+             <div id="login_container">
       
        
        <ul>
@@ -301,13 +301,9 @@
 			</tr>
 			</table>
 			</form> --%>
-			 <div id="login_container">
-      	
-					
-		
-			
+			<!-- <div id="login_container" align="left"> -->
 			<h2><font size="5" color = "red">Write Review</font></h2>
-			<br>
+			<br></br>
       		<form action='WriteReviewSuccess.jsp' method="post">
       			
 						<br>
@@ -317,20 +313,20 @@
 						
 						<label><b>Product Price: </b><%= price %></label><br> 
 						
-						<br>
-						<label><b>Username</b></label><br>
+						<br></br>
+						<label><b>Username</b></label><br></br>
 						<input type="text" placeholder="Enter username" name="uid" id = "uid" required><br>
-						<br>
-						<label><b>ReviewRating (1 to 5):</b></label><br>
+						<br></br>
+						<label><b>ReviewRating (1 to 5):</b></label><br></br>
 						<input type="text" placeholder="Enter Ratings" name="rating" id = "rating" required><br>
 						<br>
-						<label><b>ReviewDate: </b></label><br>
+						<label><b>ReviewDate: </b></label><br></br>
 						<input type="date" placeholder="Date" name="rdate" id = "rdate" required><br>
 						<br>
-						<label><b>Review Text</b></label><br>
+						<label><b>Review Text</b></label><br></br>
 						<input type="text" placeholder="Enter Review" name="reviewtext" id = "reviewtext" required><br>
-						<br>
-						<button type="submit">Submit Review</button><br>
+						<br></br>
+						<button type="submit">Submit Review</button><br></br>
 						<input type='hidden' name = 'productName' value = '<%=productName %>'/>
            				 <input type='hidden' name = 'productPrice' value = '<%= price %>'/>
           				  <input type='hidden' name = 'productImage' value = '<%= image %>'/>
@@ -341,7 +337,7 @@
                   </ul>
                  
                   
-                  </div>
+                  <!--</div>  -->
                   
           <!-- End Write Review -->
         </div>
@@ -365,5 +361,6 @@
     <!-- End Content -->
   </div>
 <!-- End Main -->
+</div>
 </body>
 </html>

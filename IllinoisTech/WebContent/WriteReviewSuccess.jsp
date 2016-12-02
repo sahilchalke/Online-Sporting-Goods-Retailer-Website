@@ -111,12 +111,8 @@
 
       %>
       <h4> Review Successfully submitted. </h4> 
-      <% 
-     
-    	  
-
-          %>
-          <h4> Comment Successfully submitted. </h4> 
+ 
+          
     
       <div id="container">
         <div class="tabbed">

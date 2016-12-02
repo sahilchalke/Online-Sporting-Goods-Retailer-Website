@@ -91,7 +91,7 @@
 
 			DateFormat format = new SimpleDateFormat("MM/dd/YYYY");
 			%>
-			<h2><font size="5" color = "red">Your Total Cost is  <%= sum %></font></h2>
+			<h2><font size="5" color = "red">Your Total Cost is  $<%= sum %></font></h2>
 			<br>
       		<form action='invoice.jsp' method="post">
       			<div align="center">

@@ -122,7 +122,7 @@
 					int total ;
 					//System.out.println(cartMap.size());
 					System.out.println("Product id : "+prod.getPid());
-					total=Integer.parseInt(price)-(Integer.parseInt(price)*Integer.parseInt(discount)/100);
+					total=Integer.parseInt(quantity)*Integer.parseInt(price)-(Integer.parseInt(price)*Integer.parseInt(discount)/100);
 					sum =sum + total;
               %>
 			<br>
@@ -157,7 +157,7 @@
 				<% } 
 					request.getSession().setAttribute("orderlist", productInOrder);
 				%>	
-				<p align="center" style="color:red;" ><font size="5" >Your total Checkout price is <%= sum %></font></p>
+				<p align="center" style="color:red;" ><font size="5" >Your total Checkout price is $<%= sum %></font></p>
 				<form action='Buy.jsp' >
 				<button type="submit">Proceed</button>
 				<input type="hidden" name="sum" value="<%=sum%>"/>

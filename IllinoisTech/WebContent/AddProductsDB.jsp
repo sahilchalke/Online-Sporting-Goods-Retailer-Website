@@ -101,7 +101,7 @@
 	String iPath = request.getParameter("iPath");
 	String price = request.getParameter("price");
 	String discount = request.getParameter("discount");
-	mysql.insertProduct(category, pid, rid, pName, iPath, price, discount, "1");
+	mysql.insertProduct(category, pid, rid, pName, "css/images/" + iPath, price, discount, "1");
 	response.sendRedirect("RetailerAdd.jsp?message=Product Inserted Successfully");
 
 %>
