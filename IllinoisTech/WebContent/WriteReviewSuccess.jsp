@@ -30,11 +30,11 @@
       <h1 id="logo"><a href="#">IllinoisTech Sporting Goods</a></h1>
       <div id="navigation">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Support</a></li>
-          <li><a href="Login.jsp">Login</a></li>
-          <li><a href="Signup.html">Sign Up</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="UserHome.jsp">Home</a></li>
+          					<li><a href="#">Support</a></li>
+          					<li><a href="MyOrders.html">My Orders</a></li>
+          					<li><a href="#">Contact</a></li>
+          					<li><a href="index.jsp?value=logout">Logout</a></li>
         </ul>
       </div>
     </div>

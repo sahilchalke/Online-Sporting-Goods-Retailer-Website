@@ -264,14 +264,13 @@
           <!-- End View  Review -->
           <!-- Third Tab Content -->
           <div class="tab-content" style="display:block;">
-            <div class="items">
-              <div class="cl">&nbsp;</div>
+             <div id="container">
       
        
        <ul>
        <li>
                   
-                  <form method='post' action='WriteReviewSuccess.jsp'>
+                 <%--  <form method='post' action='WriteReviewSuccess.jsp'>
 			<br></br>
 			<h3>Write Review</h3>
 			<table class='specialtable'>
@@ -294,12 +293,47 @@
            	</td>
 			</tr>
 			</table>
-			</form>
-			        
+			</form> --%>
+			 <div id="login_container">
+      	
+					
+		
+			
+			<h2><font size="5" color = "red">Write Review</font></h2>
+			<br>
+      		<form action='WriteReviewSuccess.jsp' method="post">
+      			
+						<br>
+						<label><b>Product Name: </b></label><%= productName %><br> 
+						
+						<br>
+						
+						<label><b>Product Price: </b><%= price %></label><br> 
+						
+						<br>
+						<label><b>Username</b></label><br>
+						<input type="text" placeholder="Enter username" name="uid" id = "uid" required><br>
+						<br>
+						<label><b>ReviewRating (1 to 5):</b></label><br>
+						<input type="text" placeholder="Enter Ratings" name="rating" id = "rating" required><br>
+						<br>
+						<label><b>ReviewDate: </b></label><br>
+						<input type="date" placeholder="Date" name="rdate" id = "rdate" required><br>
+						<br>
+						<label><b>Review Text</b></label><br>
+						<input type="text" placeholder="Enter Review" name="reviewtext" id = "reviewtext" required><br>
+						<br>
+						<button type="submit">Submit Review</button><br>
+						<input type='hidden' name = 'productName' value = '<%=productName %>'/>
+           				 <input type='hidden' name = 'productPrice' value = '<%= price %>'/>
+          				  <input type='hidden' name = 'productImage' value = '<%= image %>'/>
+           				 <input type='hidden' name = 'productDiscount' value = '<%= discount %>'/>
+					</form>
+             </div>
                   </li>
                   </ul>
                  
-                  </div>
+                  
                   </div>
                   
           <!-- End Write Review -->

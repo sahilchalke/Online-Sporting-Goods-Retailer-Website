@@ -29,11 +29,11 @@
 					</h1>
 					<div id="navigation">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Support</a></li>
-							<li><a href="#">Login</a></li>
-							<li><a href="Signup.jsp">Sign Up</a></li>
-							<li><a href="#">Contact</a></li>
+							<li><a href="UserHome.jsp">Home</a></li>
+          					<li><a href="#">Support</a></li>
+          					<li><a href="MyOrders.html">My Orders</a></li>
+          					<li><a href="#">Contact</a></li>
+          					<li><a href="index.jsp?value=logout">Logout</a></li>
 						</ul>
 					</div>
 				</div>
@@ -80,7 +80,7 @@
       	<div id="login_container">
       	
 					
-			<div id="login_container">
+		
 			<% String sum = request.getParameter("sum"); 
 				String orderid = request.getParameter("orderid");
 			User user = (User)request.getSession().getAttribute("userData");
@@ -91,20 +91,23 @@
 
 			DateFormat format = new SimpleDateFormat("MM/dd/YYYY");
 			%>
-			<h2>Your Total Cost is  <%= sum %></h2>
+			<h2><font size="5" color = "red">Your Total Cost is  <%= sum %></font></h2>
 			<br>
       		<form action='invoice.jsp' method="post">
       			<div align="center">
+      			<br>
+      			<br>
 							<h2>Enter your shipping address</h2>
 						</div>
-						<br><br>
+						<br>
 						<label><b>Shipping Address</b></label><br> 
-						<input type="text" placeholder="Enter Shipping number" name="shipAddress" id = "shipAddress" required><br>
+						<input type="text" placeholder="Enter Shipping Address" name="shipAddress" id = "shipAddress" required><br>
 						<div align="center">
+						<br><br>
 							<h2>Enter Credit/Debit Card Details</h2>
 						</div>
+						<br>
 						
-						<br><br>
 						<label><b>Credit Card Number</b></label><br> 
 						<input type="text" placeholder="Enter CreditCard number" name="ccnumber" id = "ccnumber" required><br> 
 						
@@ -120,12 +123,11 @@
 						<!-- <label><b>Shipping Address</b></label><br>
 						<input type="text" placeholder="Billing Address" name="address" id = "address" required><br> -->
 						
-						<button type="submit">Purchase</button><br>
+						<button type="submit">Confirm Order</button><br>
 						<input type="hidden" name="sum" value="<%=sum%>"/>
 						<input type="hidden" name="orderid" value="<%=orderid%>"/>
 					</form>
-					<label><b>Or</b></label><br>
-      	</div>
+      
 		
 			
 					  	
