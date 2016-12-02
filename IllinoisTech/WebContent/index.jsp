@@ -80,7 +80,7 @@
 			</div>	
 			<div id="autocompleteContainer" style="height: auto; float: top; margin-top: 25px;">
 					<table id="complete-table" 
-					style="position: absolute; border-collapse: collapse; background: white; font-size: 14px; width: 195px;">
+					style="position: absolute; border-collapse: collapse; background: white; font-size: 14px; width: 195px; z-index: 1">
 					</table>
 			</div>	
 	  </div>
@@ -295,7 +295,7 @@
 						prod = m.getValue();
 						%>
 						<tr>
-								<td><img class="header-image" src="images/<%=prod.getImagePath()%>" width="300" height="200" alt="Buildings" />
+								<td><img class="header-image" src="<%=prod.getImagePath()%>" width="300" height="200" alt="Buildings" />
 								</td>
 								<td>
 								<h5 style="text-decoration: underline; color: blue;">

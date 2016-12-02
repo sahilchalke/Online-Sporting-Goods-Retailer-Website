@@ -12,8 +12,9 @@
 <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
 <script src="js/jquery.slide.js" type="text/javascript"></script>
 <script src="js/jquery-func.js" type="text/javascript"></script>
+<script src="js/Ajax.js" type="text/javascript"></script>
 </head>
-<body>
+<body onload="init()">
 <div id="body">
 <%
 	if(request.getSession().getAttribute("userData") == null || request.getSession().getAttribute("userCart") == null)
@@ -62,17 +63,22 @@
   <div class="shell">
     <!-- Search, etc -->
     <div class="options">
-      <div style="float: left; margin-top: 10px; padding-right: 7px;">
+    <div style="float: left; margin-top: 10px; padding-right: 7px;">
     	 <p>Search IllinoisTech</p>
       </div>
       <div class="search">
-        <form action="#" method="post">
-          <span class="field">
-          <input type="text" class="blink" value=" search here.." title="SEARCH" />
-          </span>
-          <input type="text" class="search-submit" value="GO" />
-        </form>
-      </div>
+      		<div>
+      			<span class="field">	
+				<input type="text" class="blink" name="searchId" id="searchId" onkeyup="doCompletion()" value="  Search here.." autocomplete="on"/>
+				</span>
+				<input type="text" class="search-submit" value="GO" />
+			</div>	
+			<div id="autocompleteContainer" style="height: auto; float: top; margin-top: 25px;">
+					<table id="complete-table" 
+					style="position: absolute; border-collapse: collapse; background: white; font-size: 14px; width: 195px; z-index: 1">
+					</table>
+			</div>	
+	  </div>
       <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px; width: 150px:">
       	<p>Hello, <%=user.getUsername() %></p>
       </div>
@@ -313,7 +319,7 @@
 						prod = m.getValue();
 						%>
 						<tr>
-								<td><img class="header-image" src="images/<%=prod.getImagePath()%>" width="300" height="200" alt="Buildings" />
+								<td><img class="header-image" src="<%=prod.getImagePath()%>" width="300" height="200" alt="Buildings" />
 								</td>
 								<td>
 								<h5 style="text-decoration: underline; color: blue;">
