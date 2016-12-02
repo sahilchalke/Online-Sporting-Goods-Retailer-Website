@@ -154,10 +154,17 @@
                  <p> Discount: <span><%= discount%></span></p>
                  <br></br>
                  <center>
-                  <form class = 'submit-button' method = 'post' action = 'ViewCart.jsp'>		           
+                  <form class = 'submit-button' method = 'post' action = 'ViewCart.jsp'>	
+                  		<%
+			            	if(user == null){
+			            %>
+			            	<input type="hidden" name="action" value="kindlyLogin"/>
+			            <%}else{ %>
+			            <input type="hidden" name="action" value="addToCart"/>
+			            <%} %>	           
                   		<input type="hidden" name="productId" value="<%=productId%>"/>
-                  		<input type="hidden" name="action" value="addToCart"/>
-			            <input class = 'submit-button' type = 'submit'  value = 'AddToCart' style="width: 100px; height: 30px;"/>
+                  		
+			            <input class = 'submit-button' type = 'submit'  value = 'Add To Cart' style="width: 100px; height: 30px;"/>
 			      </form>
 			     </center>
                </li>

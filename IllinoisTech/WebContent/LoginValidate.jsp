@@ -47,7 +47,7 @@
 				e.printStackTrace();
 			}
 		} else {
-			request.setAttribute("status", "value");
+			request.setAttribute("status", "invalid");
 			request.getRequestDispatcher("Login.jsp").forward(request,
 					response);
 		}

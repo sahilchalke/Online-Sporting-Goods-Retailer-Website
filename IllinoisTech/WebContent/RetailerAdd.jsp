@@ -131,9 +131,6 @@ String message = request.getParameter("message");
 								<label><b>Discount:</b></label><br> <input type="text"
 									placeholder="Enter Discount" name="discount" id="discount"
 									required><br> 
-									
-									<label><b>Active:</b></label><br>
-								<input type="text" value="1" name="active" id="active" required><br>
 
 								<button type="submit">Add</button>
 								
