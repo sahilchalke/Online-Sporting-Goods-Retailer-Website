@@ -76,10 +76,12 @@
 					<div id="navigation">
 						<ul>
 							<li><a href="UserHome.jsp">Home</a></li>
-							<li><a href="#">Support</a></li>
-							<li><a href="#">My Orders</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="index.jsp?value=logout">Logout</a></li>
+
+          					<li><a href="#">Support</a></li>
+          					<li><a href="MyOrders.html">My Orders</a></li>
+          					<li><a href="#">Contact</a></li>
+          					<li><a href="index.jsp?value=logout">Logout</a></li>
+
 						</ul>
 					</div>
 				</div>

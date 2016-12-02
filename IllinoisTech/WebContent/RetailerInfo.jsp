@@ -2,13 +2,16 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
-<%@page import="bean.Products"%>
+<%@page import="bean.*"%>
 <%@ page import="com.mongodb.DBCursor"%>
 <%@page import="database.MySqlJDBC"%>  
 
 <%@ page import="com.mongodb.BasicDBObject"%>
 <%@page import="database.MongoDbUtil"%>
 <%  MySqlJDBC mysql = new MySqlJDBC(); %>
+<%
+User user = (User)session.getAttribute("userData");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -31,11 +34,10 @@
       <h1 id="logo"><a href="#">IllinoisTech Sporting Goods</a></h1>
       <div id="navigation">
         <ul>
-          <li><a href="#">Home</a></li>
           <li><a href="#">Support</a></li>
-          <li><a href="Login.jsp">Login</a></li>
-          <li><a href="Signup.html">Sign Up</a></li>
-          <li><a href="#">Contact</a></li>
+					          <li><a href="RetailerHome.jsp">My Actions</a></li>
+					          <li><a href="#">Contact</a></li>
+					          <li><a href="index.jsp?value=logout">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -71,6 +73,10 @@
           <input type="text" class="search-submit" value="GO" />
         </form>
       </div>
+      <div style="float: left; margin-top: 10px; margin-left:220px; padding-right: 10px; width: 150px:">
+				      	<p>Hello, <%=user.getUsername() %></p>
+				      
+					</div>
       <div class="right"> <span class="cart"> <a href="#" class="cart-ico">&nbsp;</a> <strong>$0.00</strong> </span> <span class="left more-links"> <a href="#">Checkout</a></span>
       </div>
     </div>
