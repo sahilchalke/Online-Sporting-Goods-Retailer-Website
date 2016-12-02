@@ -134,26 +134,29 @@
 									
 									
 								%>
-								
-								<h2>Congratulations. Below is the summary of your purchase</h2>
+								<div id="login_container">
+								<h2><font size="5" color = "red">Congratulations!!!!!</font></h2>
+								<br>
+								<h1><font size="5" color = "red">Below is your order summary</font></h1>
 								<br><br>
 								<h2>
 									Your Total Cost is
 									<%=sum%></h2>
 								<br> 
-								<div id="login_container">
+								
 								<table class='specialtable'>
 
 
 									<tr>
-										<td>Order ID is:</td>
-										<td><%=orderid%></td>
+										<td><h2><font size="3" color = "red">Order ID is:</font></h2></td>
+										<td><font size="3" color = "red"><%=orderid%></font></td></h2>
 									</tr>
-
+									<br><br>
 									<tr>
-										<td>Delivery Date is:</td>
-										<td><%=format.format(date)%></td>
+										<td><h2><font size="3" color = "red">Delivery Date is:</font><h2></td>
+										<td><h2><font size="3" color = "red"><%=format.format(date)%></font></h2></td>
 									</tr>
+									<br><br>
 									<%
 									for(Map.Entry<String, Products> m : cartMap.entrySet()) {
 										prod = m.getValue();
@@ -161,8 +164,8 @@
 									 <div class="image"> 
                   	<img src="<%=prod.getImagePath() %>" alt="" style="width: 150px; height: 150px;"/>
                   </div>
-                  <br></br><p>Product Name: <span><%= prod.getProductName() %></span></p>
-									
+                  <br></br><p><h2>Product Name: <span><%= prod.getProductName() %> </h2></span></p>
+									<br>
 									<%} %>
 									 
 				
