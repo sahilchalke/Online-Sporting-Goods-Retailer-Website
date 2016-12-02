@@ -181,8 +181,15 @@
 						</div>
 						<%
 							if(request.getAttribute("status")!=null){
-								out.println("<br><h4 align=\"center\"> Invalid username/password.</h4>");
+								if(request.getAttribute("status").equals("invalid")){
+									out.println("<br><h4 align=\"center\"> Invalid username/password.</h4>");
+								}
 							}
+							if(request.getParameter("value")!=null){
+								if(request.getParameter("value").equals("kindlyLogin")){
+									out.println("<br><h4 align=\"center\"> Kindly Login.</h4>");
+								}
+							}	
 						%>
 						<label><b>Email Id:</b></label><br> 
 						<input type="text" placeholder="Enter Email" name="email" id = "email" required><br> 
