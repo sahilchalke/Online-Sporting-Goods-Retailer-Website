@@ -3,14 +3,14 @@
 *****************************************Project Description*********************************************
 
 An online sports good retailer website.
-Buy variety of sporting goods equipment, apparel and footwear in a specialty online store environments
-Avail variety of retailer discounts
+Buy variety of sporting goods equipment, apparel and footwear in a specialty online store environments.
+Avail variety of retailer discounts.
 Provide a platform for various retailers to sell their products.
 
 *****************************************Requirement Specifications****************************************
-1. User should be able to Signup with Facebook 
-2. User should be able to search by product name, sport and product category
-3. User should be able to add multiple products to cart
+1. User should be able to Signup with Facebook.
+2. User should be able to search by product name, sport and product category.
+3. User should be able to add multiple products to cart.
 4. User should be able to modify cart.
 5. User should be able to place order and purchase using Credit card/ Third party payment service.
 6. User should be able to cancel and track order.
