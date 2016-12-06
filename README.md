@@ -7,7 +7,7 @@ Buy variety of sporting goods equipment, apparel and footwear in a specialty onl
 Avail variety of retailer discounts.
 Provide a platform for various retailers to sell their products.
 
-*****************************************Requirement Specifications****************************************
+*****************************************Project Specifications****************************************
 
 1. User should be able to Signup with Facebook.
 2. User should be able to search by product name, sport and product category.
