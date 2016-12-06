@@ -8,6 +8,7 @@ Avail variety of retailer discounts.
 Provide a platform for various retailers to sell their products.
 
 *****************************************Requirement Specifications****************************************
+
 1. User should be able to Signup with Facebook.
 2. User should be able to search by product name, sport and product category.
 3. User should be able to add multiple products to cart.
